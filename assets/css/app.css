@@ -617,3 +617,126 @@ Selection
     color: var(--kg-white);
 
 }
+
+
+/*
+==========================================================
+Professional App Loader
+==========================================================
+*/
+
+
+.app-loader {
+
+    position: fixed;
+
+    inset: 0;
+
+    width: 100%;
+
+    height: 100vh;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    background: var(--kg-white);
+
+    z-index: var(--z-loader);
+
+}
+
+
+
+.loader-wrapper {
+
+    text-align: center;
+
+}
+
+
+
+.loader-logo {
+
+    width: 90px;
+
+    height: 90px;
+
+    border-radius: 50%;
+
+    border: 4px solid var(--kg-orange);
+
+    object-fit: cover;
+
+    margin-bottom: 20px;
+
+}
+
+
+
+.loading-spinner {
+
+    width: 38px;
+
+    height: 38px;
+
+    border-radius: 50%;
+
+    border: 4px solid #eee;
+
+    border-top-color: var(--kg-primary);
+
+    animation: loaderSpin .8s linear infinite;
+
+    margin: auto;
+
+}
+
+
+
+.loader-wrapper p {
+
+    margin-top: 15px;
+
+    color: var(--kg-muted);
+
+    font-size: .9rem;
+
+}
+
+
+
+@keyframes loaderSpin {
+
+
+    from {
+
+        transform: rotate(0deg);
+
+    }
+
+
+    to {
+
+        transform: rotate(360deg);
+
+    }
+
+
+}
+
+
+
+/* hidden state */
+
+.app-loader.hide {
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transition: .4s ease;
+
+    }
