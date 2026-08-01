@@ -97,21 +97,14 @@ Header
 */
 
 
-.main-header {
-
-    background: var(--kg-white);
-
-    box-shadow: var(--shadow-sm);
-
-    height: var(--kg-header-height);
-
+.main-header{
+    background:var(--kg-white);
+    box-shadow:var(--shadow-sm);
 }
 
-
-.navbar {
-
-    height: 100%;
-
+.navbar{
+    min-height:80px;
+    padding:.75rem 0;
 }
 
 
