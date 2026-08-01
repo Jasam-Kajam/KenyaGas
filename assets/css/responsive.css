@@ -526,12 +526,6 @@ Very Large Displays
    Desktop Navigation
 ========================================================== */
 
-@media (min-width:992px){
-
-    #desktopNavigation{
-        display:flex !important;
-    }
-
     .navbar-toggler{
         display:none !important;
     }
@@ -541,12 +535,6 @@ Very Large Displays
 /* ==========================================================
    Mobile Navigation
 ========================================================== */
-
-@media (max-width:991px){
-
-    #desktopNavigation{
-        display:none !important;
-    }
 
     .navbar-toggler{
         display:flex !important;
