@@ -97,135 +97,89 @@ Tablet Devices
 ==========================================================
 */
 
-
 @media (max-width: 991px) {
 
+    /* Header */
 
-
-    /*
-    Header
-    */
-
-
-    .main-header {
-
-        height: auto;
-
+    .main-header{
+        height:auto;
     }
 
+    /* Hide desktop navigation */
 
-
-    .desktop-navigation {
-
-        display: none;
-
+    #desktopNavigation{
+        display:none !important;
     }
 
+    /* Show hamburger */
 
-
-    .header-actions .btn {
-
-        display: none;
-
+    .navbar-toggler{
+        display:flex !important;
+        align-items:center;
+        justify-content:center;
+        border:0;
+        background:transparent;
+        padding:.5rem;
     }
 
-
-
-
-
-    /*
-    Hero
-    */
-
-
-    .hero-section {
-
-        text-align: center;
-
+    .navbar-toggler:focus{
+        box-shadow:none;
     }
 
-
-
-    .hero-description {
-
-        margin-left: auto;
-
-        margin-right: auto;
-
+    .navbar-toggler-icon{
+        width:1.6rem;
+        height:1.6rem;
+        background-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%230F4C81' stroke-linecap='round' stroke-width='2.5' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        background-repeat:no-repeat;
+        background-position:center;
+        background-size:100%;
     }
 
+    /* Hide desktop buttons */
 
-
-    .hero-actions {
-
-        justify-content: center;
-
+    .header-actions{
+        display:none !important;
     }
 
+    /* Hero */
 
-
-    .hero-trust {
-
-        justify-content: center;
-
+    .hero-section{
+        text-align:center;
     }
 
-
-
-    .hero-image-wrapper {
-
-        margin-top: 2rem;
-
+    .hero-description{
+        margin-left:auto;
+        margin-right:auto;
     }
 
-
-
-
-
-    .floating-stat {
-
-        position: static;
-
-        margin-top: 1rem;
-
+    .hero-actions{
+        justify-content:center;
     }
 
-
-
-
-
-    /*
-    Newsletter
-    */
-
-
-    .newsletter-card {
-
-        flex-direction: column;
-
-        text-align: center;
-
+    .hero-trust{
+        justify-content:center;
     }
 
-
-
-
-
-    .newsletter-form {
-
-        width: 100%;
-
+    .hero-image-wrapper{
+        margin-top:2rem;
     }
 
+    .floating-stat{
+        position:static;
+        margin-top:1rem;
+    }
 
+    /* Newsletter */
 
+    .newsletter-card{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .newsletter-form{
+        width:100%;
+    }
 }
-
-
-
-
-
-
 
 /*
 ==========================================================
@@ -568,23 +522,34 @@ Very Large Displays
 }
 
 
-/* Hide desktop menu on small screens */
+/* ==========================================================
+   Desktop Navigation
+========================================================== */
 
-@media(max-width:991px){
+@media (min-width:992px){
 
     #desktopNavigation{
+        display:flex !important;
+    }
+
+    .navbar-toggler{
         display:none !important;
     }
 
 }
 
+/* ==========================================================
+   Mobile Navigation
+========================================================== */
 
-/* Hide mobile toggle on desktop */
+@media (max-width:991px){
 
-@media(min-width:992px){
+    #desktopNavigation{
+        display:none !important;
+    }
 
     .navbar-toggler{
-        display:none;
+        display:flex !important;
     }
 
 }
