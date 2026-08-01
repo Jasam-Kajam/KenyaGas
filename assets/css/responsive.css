@@ -16,6 +16,51 @@ Extra Large Screens
 ==========================================================
 */
 
+/* =====================================
+   HEADER MENU FIX
+===================================== */
+
+
+/* Desktop only */
+
+@media (min-width: 992px){
+
+    .navbar-toggler{
+        display:none !important;
+    }
+
+
+    #mobileMenu{
+        display:none !important;
+    }
+
+
+    #desktopNavigation{
+        display:flex !important;
+    }
+
+}
+
+
+
+
+/* Mobile only */
+
+@media (max-width:991px){
+
+
+    #desktopNavigation{
+        display:none !important;
+    }
+
+
+    .navbar-toggler{
+        display:block !important;
+    }
+
+
+}
+
 @media (min-width: 1400px) {
 
 
