@@ -18,6 +18,27 @@ Announcement Bar
 /* ======================================================
    NAVBAR TOGGLER
 ====================================================== */
+/* ==========================================
+   Navbar Layout
+========================================== */
+
+.navbar .container{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:nowrap;
+}
+
+.navbar-brand{
+    display:flex;
+    align-items:center;
+    flex-shrink:0;
+}
+
+.navbar-toggler{
+    margin-left:auto;
+    flex-shrink:0;
+}
 
 .navbar-toggler{
     border:none;
