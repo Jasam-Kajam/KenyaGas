@@ -1,0 +1,2804 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- ==========================================================
+         Kenya Gas Marketplace
+         File: index.html
+         Part: 1
+         Version: 3.0.0
+
+         Production Marketplace Foundation
+         ========================================================== -->
+
+
+    <!-- Character Encoding -->
+    <meta charset="UTF-8">
+
+
+    <!-- Responsive Design -->
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+
+    <!-- Browser Compatibility -->
+    <meta http-equiv="X-UA-Compatible"
+          content="IE=edge">
+
+
+    <!-- Page Information -->
+    <title>
+        Kenya Gas Marketplace | Trusted LPG Suppliers Across Kenya
+    </title>
+
+
+    <meta name="description"
+          content="Kenya Gas Marketplace connects customers with verified LPG suppliers across Kenya. Buy gas refills, cylinders and accessories safely and conveniently.">
+
+
+    <meta name="keywords"
+          content="Kenya Gas, LPG Kenya, Cooking Gas, Gas Refill, Gas Cylinder, LPG Suppliers, Gas Marketplace">
+
+
+    <meta name="author"
+          content="Kenya Gas Marketplace">
+
+
+    <meta name="robots"
+          content="index, follow">
+
+
+
+    <!-- Theme -->
+    <meta name="theme-color"
+          content="#0F4C81">
+
+
+
+    <!-- Canonical -->
+    <link rel="canonical"
+          href="https://kenyagas-46f74.web.app/">
+
+
+
+    <!-- ==========================================================
+         Open Graph
+         ========================================================== -->
+
+
+    <meta property="og:type"
+          content="website">
+
+
+    <meta property="og:title"
+          content="Kenya Gas Marketplace">
+
+
+    <meta property="og:description"
+          content="Find trusted LPG suppliers, compare gas products and order conveniently.">
+
+
+    <meta property="og:url"
+          content="https://kenyagas-46f74.web.app/">
+
+
+    <meta property="og:image"
+          content="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEig4yNkKOEND3ZSjv6V5xSnVE_V5bspkYwL1FH_496CICf-ut9hbogrkIAYe_ccWxZMj-h125Hjq0d9o6DYvkvsY3OwAz4X2AyraLagBuCwxc1M1f8UHWi7-gVxuuLaPvY3CRgWICglnQ7v2ExAhaOu-O5E6EgVnG58JxM9-b0RTDIJz84t-ucAdi7QjbEb/s1408/favicon.png">
+
+
+
+    <!-- ==========================================================
+         Twitter Card
+         ========================================================== -->
+
+
+    <meta name="twitter:card"
+          content="summary_large_image">
+
+
+    <meta name="twitter:title"
+          content="Kenya Gas Marketplace">
+
+
+    <meta name="twitter:description"
+          content="Kenya's trusted LPG marketplace connecting customers and suppliers.">
+
+
+    <meta name="twitter:image"
+          content="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEig4yNkKOEND3ZSjv6V5xSnIAYe_ccWxZMj-h125Hjq0d9o6DYvkvsY3OwAz4X2AyraLagBuCwxc1M1f8UHWi7-gVxuuLaPvY3CRgWICglnQ7v2ExAhaOu-O5E6EgVnG58JxM9-b0RTDIJz84t-ucAdi7QjbEb/s1408/favicon.png">
+
+
+
+    <!-- ==========================================================
+         Brand Logo / Favicon
+         ========================================================== -->
+
+
+    <link rel="icon"
+          type="image/png"
+          href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEig4yNkKOEND3ZSjv6V5xSnIAYe_ccWxZMj-h125Hjq0d9o6DYvkvsY3OwAz4X2AyraLagBuCwxc1M1f8UHWi7-gVxuuLaPvY3CRgWICglnQ7v2ExAhaOu-O5E6EgVnG58JxM9-b0RTDIJz84t-ucAdi7QjbEb/s1408/favicon.png">
+
+
+
+    <!-- ==========================================================
+         PWA
+         ========================================================== -->
+
+
+    <link rel="manifest"
+          href="/manifest.json">
+
+
+
+    <!-- ==========================================================
+         Performance
+         ========================================================== -->
+
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+
+
+    <!-- ==========================================================
+         Typography
+         ========================================================== -->
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+
+
+    <!-- ==========================================================
+         Local Vendor CSS
+         ========================================================== -->
+
+
+    <link rel="stylesheet"
+          href="/assets/vendors/bootstrap/css/bootstrap.min.css">
+
+
+    <link rel="stylesheet"
+          href="/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+
+
+
+    <!-- ==========================================================
+         Kenya Gas Design System
+         ========================================================== -->
+
+
+    <link rel="stylesheet"
+          href="/assets/css/variables.css">
+
+
+    <link rel="stylesheet"
+          href="/assets/css/app.css">
+
+
+    <link rel="stylesheet"
+          href="/assets/css/components.css">
+
+
+    <link rel="stylesheet"
+          href="/assets/css/utilities.css">
+
+
+    <link rel="stylesheet"
+          href="/assets/css/responsive.css">
+
+
+</head>
+
+
+
+<body>
+
+
+    <!-- ==========================================================
+         Application Loading Screen
+         ========================================================== -->
+
+
+    <div id="appLoader"
+         class="app-loader">
+
+
+        <div class="loader-wrapper">
+
+
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEig4yNkKOEND3ZSjv6V5xSnVE_V5bspkYwL1FH_496CICf-ut9hbogrkIAYe_ccWxZMj-h125Hjq0d9o6DYvkvsY3OwAz4X2AyraLagBuCwxc1M1f8UHWi7-gVxuuLaPvY3CRgWICglnQ7v2ExAhaOu-O5E6EgVnG58JxM9-b0RTDIJz84t-ucAdi7QjbEb/s1408/favicon.png"
+                 alt="Kenya Gas Marketplace Logo"
+                 class="brand-logo loader-logo">
+
+
+
+            <div class="spinner-border text-primary mt-4"
+                 role="status">
+
+
+                <span class="visually-hidden">
+                    Loading...
+                </span>
+
+
+            </div>
+
+
+
+            <h5 class="mt-3">
+                Kenya Gas Marketplace
+            </h5>
+
+
+            <p class="text-muted">
+                Loading marketplace...
+            </p>
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+    <!-- ==========================================================
+         Main Application Container
+         ========================================================== -->
+
+
+    <div id="app">
+
+<!-- ==========================================================
+     Announcement Bar
+     ========================================================== -->
+
+<div class="announcement-bar">
+
+    <div class="container">
+
+        <div class="announcement-content">
+
+            <span>
+                <i class="bi bi-shield-check"></i>
+                Trusted LPG marketplace connecting customers with verified suppliers
+            </span>
+
+
+            <span class="announcement-location">
+
+                <i class="bi bi-geo-alt"></i>
+                Serving customers across Kenya
+
+            </span>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ==========================================================
+     Main Header
+     ========================================================== -->
+
+<header class="main-header sticky-top">
+
+
+    <nav class="navbar navbar-expand-lg">
+
+
+        <div class="container">
+
+
+            <!-- Brand Logo -->
+
+            <a class="navbar-brand"
+               href="/"
+               aria-label="Kenya Gas Marketplace Home">
+
+
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEig4yNkKOEND3ZSjv6V5xSnIAYe_ccWxZMj-h125Hjq0d9o6DYvkvsY3OwAz4X2AyraLagBuCwxc1M1f8UHWi7-gVxuuLaPvY3CRgWICglnQ7v2ExAhaOu-O5E6EgVnG58JxM9-b0RTDIJz84t-ucAdi7QjbEb/s1408/favicon.png"
+                     alt="Kenya Gas Marketplace"
+                     class="brand-logo">
+
+
+                <div class="brand-text">
+
+                    <strong>
+                        Kenya Gas
+                    </strong>
+
+
+                    <small>
+                        Marketplace
+                    </small>
+
+                </div>
+
+
+            </a>
+
+
+
+
+
+            <!-- Mobile Toggle -->
+
+
+            <button class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="offcanvas"
+                    data-bs-target="#mobileMenu"
+                    aria-controls="mobileMenu"
+                    aria-label="Open navigation menu">
+
+
+                <span class="navbar-toggler-icon"></span>
+
+
+            </button>
+
+
+
+
+
+            <!-- Desktop Navigation -->
+
+
+            <div class="collapse navbar-collapse"
+                 id="desktopNavigation">
+
+
+                <ul class="navbar-nav mx-auto">
+
+
+                    <li class="nav-item">
+
+                        <a class="nav-link active"
+                           href="/">
+
+                            Home
+
+                        </a>
+
+                    </li>
+
+
+
+                    <li class="nav-item">
+
+                        <a class="nav-link"
+                           href="/products/">
+
+                            Products
+
+                        </a>
+
+                    </li>
+
+
+
+
+                    <li class="nav-item">
+
+                        <a class="nav-link"
+                           href="/suppliers/">
+
+                            Suppliers
+
+                        </a>
+
+                    </li>
+
+
+
+
+                    <li class="nav-item dropdown">
+
+
+                        <a class="nav-link dropdown-toggle"
+                           href="#"
+                           role="button"
+                           data-bs-toggle="dropdown">
+
+
+                            Categories
+
+
+                        </a>
+
+
+
+                        <ul class="dropdown-menu">
+
+
+                            <li>
+
+                                <a class="dropdown-item"
+                                   href="/products/?category=refill">
+
+                                    Gas Refills
+
+                                </a>
+
+                            </li>
+
+
+
+                            <li>
+
+                                <a class="dropdown-item"
+                                   href="/products/?category=cylinder">
+
+                                    Gas Cylinders
+
+                                </a>
+
+                            </li>
+
+
+
+                            <li>
+
+                                <a class="dropdown-item"
+                                   href="/products/?category=accessories">
+
+                                    Accessories
+
+                                </a>
+
+                            </li>
+
+
+                        </ul>
+
+
+                    </li>
+
+
+
+
+
+                    <li class="nav-item">
+
+                        <a class="nav-link"
+                           href="/about/">
+
+                            About Us
+
+                        </a>
+
+                    </li>
+
+
+
+                    <li class="nav-item">
+
+                        <a class="nav-link"
+                           href="/contact/">
+
+                            Contact
+
+                        </a>
+
+                    </li>
+
+
+                </ul>
+
+
+
+
+
+                <!-- Header Actions -->
+
+
+                <div class="header-actions d-flex align-items-center gap-3">
+
+
+
+                    <!-- Search -->
+
+                    <button class="btn header-icon-btn"
+                            id="searchToggle"
+                            aria-label="Search">
+
+
+                        <i class="bi bi-search"></i>
+
+
+                    </button>
+
+
+
+
+                    <!-- Cart -->
+
+
+                    <a href="/cart/"
+                       class="header-icon-btn position-relative"
+                       aria-label="Shopping cart">
+
+
+                        <i class="bi bi-cart3"></i>
+
+
+                        <span id="cartCount"
+                              class="cart-badge">
+
+                            0
+
+                        </span>
+
+
+                    </a>
+
+
+
+
+
+                    <!-- Login -->
+
+
+                    <a href="/login/"
+                       class="btn btn-outline-primary">
+
+
+                        Login
+
+
+                    </a>
+
+
+
+
+                    <!-- Register -->
+
+
+                    <a href="/register/"
+                       class="btn btn-primary">
+
+
+                        Register
+
+
+                    </a>
+
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </nav>
+
+
+</header>
+
+
+
+
+
+<!-- ==========================================================
+     Mobile Navigation
+     ========================================================== -->
+
+
+<div class="offcanvas offcanvas-end"
+     tabindex="-1"
+     id="mobileMenu"
+     aria-labelledby="mobileMenuLabel">
+
+
+
+    <div class="offcanvas-header">
+
+
+        <div class="d-flex align-items-center">
+
+
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEig4yNkKOEND3ZSjv6V5xSnIAYe_ccWxZMj-h125Hjq0d9o6DYvkvsY3OwAz4X2AyraLagBuCwxc1M1f8UHWi7-gVxuuLaPvY3CRgWICglnQ7v2ExAhaOu-O5E6EgVnG58JxM9-b0RTDIJz84t-ucAdi7QjbEb/s1408/favicon.png"
+                 class="brand-logo"
+                 alt="Kenya Gas">
+
+
+            <strong class="ms-2">
+
+                Kenya Gas
+
+            </strong>
+
+
+        </div>
+
+
+
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="offcanvas"
+                aria-label="Close"></button>
+
+
+    </div>
+
+
+
+
+
+    <div class="offcanvas-body">
+
+
+        <ul class="mobile-navigation">
+
+
+            <li>
+                <a href="/">
+                    Home
+                </a>
+            </li>
+
+
+            <li>
+                <a href="/products/">
+                    Products
+                </a>
+            </li>
+
+
+            <li>
+                <a href="/suppliers/">
+                    Suppliers
+                </a>
+            </li>
+
+
+            <li>
+                <a href="/about/">
+                    About Us
+                </a>
+            </li>
+
+
+            <li>
+                <a href="/contact/">
+                    Contact
+                </a>
+            </li>
+
+
+        </ul>
+
+
+
+
+        <div class="mobile-auth-buttons">
+
+
+            <a href="/login/"
+               class="btn btn-outline-primary w-100">
+
+                Login
+
+            </a>
+
+
+            <a href="/register/"
+               class="btn btn-primary w-100 mt-2">
+
+                Create Account
+
+            </a>
+
+
+        </div>
+
+
+    </div>
+
+
+  </div>
+
+      <!-- ==========================================================
+     Hero Section
+     ========================================================== -->
+
+<section class="hero-section">
+
+
+    <div class="container">
+
+
+        <div class="row align-items-center g-5">
+
+
+            <!-- Hero Content -->
+
+            <div class="col-lg-7">
+
+
+                <div class="hero-content">
+
+
+                    <span class="hero-badge">
+
+                        <i class="bi bi-patch-check-fill"></i>
+
+                        Verified LPG Suppliers Across Kenya
+
+                    </span>
+
+
+
+
+                    <h1 class="hero-title">
+
+                        Buy Gas Safely From
+                        <span>
+                            Trusted Suppliers
+                        </span>
+                        Near You
+
+                    </h1>
+
+
+
+
+                    <p class="hero-description">
+
+                        Kenya Gas Marketplace connects households,
+                        businesses and verified LPG suppliers.
+                        Compare products, check prices and order
+                        conveniently from trusted sellers.
+
+                    </p>
+
+
+
+
+
+                    <!-- Search Box -->
+
+
+                    <div class="hero-search">
+
+
+                        <form id="marketplaceSearchForm"
+                              class="search-form">
+
+
+                            <div class="search-field">
+
+
+                                <i class="bi bi-search"></i>
+
+
+                                <input type="search"
+                                       id="heroSearchInput"
+                                       placeholder="Search gas, cylinders, suppliers..."
+                                       aria-label="Search marketplace">
+
+
+                            </div>
+
+
+
+
+                            <button type="submit"
+                                    class="btn btn-primary">
+
+
+                                Search
+
+
+                            </button>
+
+
+                        </form>
+
+
+                    </div>
+
+
+
+
+
+                    <!-- Action Buttons -->
+
+
+                    <div class="hero-actions">
+
+
+                        <a href="/products/"
+                           class="btn btn-primary btn-lg">
+
+
+                            Browse Products
+
+
+                            <i class="bi bi-arrow-right ms-2"></i>
+
+
+                        </a>
+
+
+
+
+                        <a href="/supplier/register/"
+                           class="btn btn-outline-primary btn-lg">
+
+
+                            Become A Supplier
+
+
+                        </a>
+
+
+                    </div>
+
+
+
+
+                    <!-- Trust Information -->
+
+
+                    <div class="hero-trust">
+
+
+                        <div class="trust-item">
+
+
+                            <i class="bi bi-shield-check"></i>
+
+
+                            <div>
+
+
+                                <strong>
+                                    Verified Suppliers
+                                </strong>
+
+
+                                <small>
+                                    Trusted businesses
+                                </small>
+
+
+                            </div>
+
+
+                        </div>
+
+
+
+
+
+                        <div class="trust-item">
+
+
+                            <i class="bi bi-lightning-charge"></i>
+
+
+                            <div>
+
+
+                                <strong>
+                                    Fast Ordering
+                                </strong>
+
+
+                                <small>
+                                    Simple checkout
+                                </small>
+
+
+                            </div>
+
+
+                        </div>
+
+
+
+
+
+                        <div class="trust-item">
+
+
+                            <i class="bi bi-credit-card"></i>
+
+
+                            <div>
+
+
+                                <strong>
+                                    Secure Payments
+                                </strong>
+
+
+                                <small>
+                                    M-PESA supported
+                                </small>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                </div>
+
+
+            </div>
+
+
+
+
+
+
+
+            <!-- Hero Image / Visual -->
+
+
+            <div class="col-lg-5">
+
+
+                <div class="hero-image-wrapper">
+
+
+                    <div class="hero-card">
+
+
+                        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEig4yNkKOEND3ZSjv6V5xSnIAYe_ccWxZMj-h125Hjq0d9o6DYvkvsY3OwAz4X2AyraLagBuCwxc1M1f8UHWi7-gVxuuLaPvY3CRgWICglnQ7v2ExAhaOu-O5E6EgVnG58JxM9-b0RTDIJz84t-ucAdi7QjbEb/s1408/favicon.png"
+                             alt="Kenya Gas Marketplace"
+                             loading="lazy"
+                             class="hero-logo-image">
+
+
+                    </div>
+
+
+
+
+
+                    <!-- Floating Statistics -->
+
+
+                    <div class="floating-stat stat-one">
+
+
+                        <i class="bi bi-shop"></i>
+
+
+                        <div>
+
+                            <strong>
+                                Verified Sellers
+                            </strong>
+
+
+                            <span>
+                                Growing network
+                            </span>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+
+
+
+                    <div class="floating-stat stat-two">
+
+
+                        <i class="bi bi-geo-alt"></i>
+
+
+                        <div>
+
+
+                            <strong>
+                                Nationwide
+                            </strong>
+
+
+                            <span>
+                                Kenya Coverage
+                            </span>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+                          </section>
+
+      <!-- ==========================================================
+     Categories Section
+     ========================================================== -->
+
+<section class="categories-section section-padding">
+
+
+    <div class="container">
+
+
+        <!-- Section Header -->
+
+        <div class="section-header text-center">
+
+
+            <span class="section-subtitle">
+
+                Explore Categories
+
+            </span>
+
+
+
+            <h2 class="section-title">
+
+                Find The Right Gas Products
+
+            </h2>
+
+
+
+            <p class="section-description">
+
+                Browse LPG refills, cylinders and accessories
+                from verified suppliers across Kenya.
+
+            </p>
+
+
+        </div>
+
+
+
+
+
+        <!-- Categories Grid -->
+
+
+        <div class="row g-4"
+             id="categoriesContainer">
+
+
+
+            <!-- Category Card -->
+
+
+            <div class="col-6 col-md-4 col-lg-3">
+
+
+                <a href="/products/?category=refill"
+                   class="category-card"
+                   data-category="refill">
+
+
+
+                    <div class="category-icon">
+
+
+                        <i class="bi bi-fire"></i>
+
+
+                    </div>
+
+
+
+                    <h3>
+
+                        Gas Refills
+
+                    </h3>
+
+
+
+                    <p>
+
+                        Refill your LPG cylinder from trusted sellers.
+
+                    </p>
+
+
+
+                    <span>
+
+                        View Products
+
+                        <i class="bi bi-arrow-right"></i>
+
+                    </span>
+
+
+
+                </a>
+
+
+            </div>
+
+
+
+
+
+
+
+            <!-- Category Card -->
+
+
+            <div class="col-6 col-md-4 col-lg-3">
+
+
+                <a href="/products/?category=cylinders"
+                   class="category-card"
+                   data-category="cylinders">
+
+
+
+                    <div class="category-icon">
+
+
+                        <i class="bi bi-box-seam"></i>
+
+
+                    </div>
+
+
+
+                    <h3>
+
+                        Gas Cylinders
+
+                    </h3>
+
+
+
+                    <p>
+
+                        Buy new LPG cylinders in different sizes.
+
+                    </p>
+
+
+
+                    <span>
+
+                        View Products
+
+                        <i class="bi bi-arrow-right"></i>
+
+                    </span>
+
+
+
+                </a>
+
+
+            </div>
+
+
+
+
+
+
+
+            <!-- Category Card -->
+
+
+            <div class="col-6 col-md-4 col-lg-3">
+
+
+                <a href="/products/?category=accessories"
+                   class="category-card"
+                   data-category="accessories">
+
+
+
+                    <div class="category-icon">
+
+
+                        <i class="bi bi-tools"></i>
+
+
+                    </div>
+
+
+
+                    <h3>
+
+                        Accessories
+
+                    </h3>
+
+
+
+                    <p>
+
+                        Regulators, hoses and gas equipment.
+
+                    </p>
+
+
+
+                    <span>
+
+                        View Products
+
+                        <i class="bi bi-arrow-right"></i>
+
+                    </span>
+
+
+
+                </a>
+
+
+            </div>
+
+
+
+
+
+
+
+            <!-- Category Card -->
+
+
+            <div class="col-6 col-md-4 col-lg-3">
+
+
+                <a href="/suppliers/"
+                   class="category-card"
+                   data-category="suppliers">
+
+
+
+                    <div class="category-icon">
+
+
+                        <i class="bi bi-shop"></i>
+
+
+                    </div>
+
+
+
+                    <h3>
+
+                        Suppliers
+
+                    </h3>
+
+
+
+                    <p>
+
+                        Find verified LPG suppliers near you.
+
+                    </p>
+
+
+
+                    <span>
+
+                        Find Suppliers
+
+                        <i class="bi bi-arrow-right"></i>
+
+                    </span>
+
+
+
+                </a>
+
+
+            </div>
+
+
+
+        </div>
+
+
+
+
+
+
+        <!-- View All Button -->
+
+
+        <div class="text-center mt-5">
+
+
+            <a href="/products/"
+               class="btn btn-outline-primary btn-lg">
+
+
+                View All Products
+
+
+                <i class="bi bi-arrow-right ms-2"></i>
+
+
+            </a>
+
+
+        </div>
+
+
+
+    </div>
+
+
+</section>
+
+      <!-- ==========================================================
+     Featured Products Section
+     ========================================================== -->
+
+<section class="featured-products-section section-padding">
+
+
+    <div class="container">
+
+
+        <!-- Section Header -->
+
+        <div class="section-header d-flex justify-content-between align-items-end flex-wrap gap-3">
+
+
+            <div>
+
+
+                <span class="section-subtitle">
+
+                    Latest Listings
+
+                </span>
+
+
+
+                <h2 class="section-title">
+
+                    Featured Gas Products
+
+                </h2>
+
+
+
+                <p class="section-description">
+
+                    Discover quality LPG products from approved suppliers.
+
+                </p>
+
+
+            </div>
+
+
+
+
+            <a href="/products/"
+               class="btn btn-outline-primary">
+
+
+                View All Products
+
+                <i class="bi bi-arrow-right ms-2"></i>
+
+
+            </a>
+
+
+
+        </div>
+
+
+
+
+
+
+
+        <!-- Products Container -->
+
+        <div class="row g-4"
+             id="featuredProductsContainer">
+
+
+
+
+
+            <!-- Product Card Template -->
+
+
+            <div class="col-12 col-sm-6 col-lg-4 col-xl-3 product-item">
+
+
+
+                <article class="product-card">
+
+
+
+                    <div class="product-image-wrapper">
+
+
+                        <span class="product-badge">
+
+                            Verified
+
+                        </span>
+
+
+
+                        <img src="/assets/images/product-placeholder.webp"
+                             alt="LPG Gas Cylinder"
+                             loading="lazy"
+                             class="product-image">
+
+
+                    </div>
+
+
+
+
+
+
+                    <div class="product-content">
+
+
+                        <h3 class="product-title">
+
+                            LPG Gas Refill
+
+                        </h3>
+
+
+
+                        <p class="product-supplier">
+
+                            <i class="bi bi-shop"></i>
+
+                            Verified Supplier
+
+                        </p>
+
+
+
+
+                        <div class="product-rating">
+
+
+                            <i class="bi bi-star-fill"></i>
+
+                            <span>
+
+                                4.8
+
+                            </span>
+
+
+                        </div>
+
+
+
+
+
+
+                        <div class="product-footer">
+
+
+                            <strong class="product-price">
+
+                                KES 1,350
+
+                            </strong>
+
+
+
+                            <a href="/product/"
+                               class="btn btn-sm btn-primary">
+
+
+                                View
+
+
+                            </a>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </article>
+
+
+
+            </div>
+
+
+
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- ==========================================================
+     Featured Suppliers Section
+     ========================================================== -->
+
+<section class="featured-suppliers-section section-padding bg-light">
+
+
+    <div class="container">
+
+
+
+        <!-- Section Header -->
+
+
+        <div class="section-header text-center">
+
+
+            <span class="section-subtitle">
+
+                Trusted Partners
+
+            </span>
+
+
+
+            <h2 class="section-title">
+
+                Featured Suppliers
+
+            </h2>
+
+
+
+            <p class="section-description">
+
+                Shop from verified LPG businesses operating across Kenya.
+
+            </p>
+
+
+
+        </div>
+
+
+
+
+
+
+
+        <!-- Supplier Container -->
+
+
+        <div class="row g-4"
+             id="featuredSuppliersContainer">
+
+
+
+
+
+            <!-- Supplier Card -->
+
+
+            <div class="col-12 col-md-6 col-lg-4">
+
+
+                <article class="supplier-card">
+
+
+
+                    <div class="supplier-header">
+
+
+                        <img src="/assets/images/supplier-placeholder.webp"
+                             alt="Supplier Logo"
+                             loading="lazy"
+                             class="supplier-logo">
+
+
+
+                        <span class="verified-badge">
+
+
+                            <i class="bi bi-patch-check-fill"></i>
+
+                            Verified
+
+
+                        </span>
+
+
+
+                    </div>
+
+
+
+
+
+
+                    <div class="supplier-body">
+
+
+                        <h3>
+
+                            Trusted Gas Supplier
+
+                        </h3>
+
+
+
+                        <p>
+
+                            Nairobi, Kenya
+
+                        </p>
+
+
+
+
+                        <div class="supplier-rating">
+
+
+                            <i class="bi bi-star-fill"></i>
+
+
+                            <span>
+
+                                4.9 Rating
+
+                            </span>
+
+
+                        </div>
+
+
+
+
+
+                        <a href="/supplier/"
+                           class="btn btn-outline-primary w-100">
+
+
+                            View Supplier
+
+
+                        </a>
+
+
+
+                    </div>
+
+
+
+                </article>
+
+
+            </div>
+
+
+
+
+
+        </div>
+
+
+
+
+
+
+        <div class="text-center mt-5">
+
+
+            <a href="/suppliers/"
+               class="btn btn-primary">
+
+
+                Explore All Suppliers
+
+
+                <i class="bi bi-arrow-right ms-2"></i>
+
+
+            </a>
+
+
+        </div>
+
+
+
+    </div>
+
+
+</section>
+
+      <!-- ==========================================================
+     Why Choose Kenya Gas Section
+     ========================================================== -->
+
+<section class="why-section section-padding">
+
+
+    <div class="container">
+
+
+        <div class="row align-items-center g-5">
+
+
+            <!-- Content -->
+
+
+            <div class="col-lg-6">
+
+
+                <div class="section-header">
+
+
+                    <span class="section-subtitle">
+
+                        Why Kenya Gas
+
+                    </span>
+
+
+
+                    <h2 class="section-title">
+
+                        A Safer And Easier Way To Buy Gas
+
+                    </h2>
+
+
+
+                    <p class="section-description">
+
+                        We connect customers with verified LPG suppliers,
+                        making gas shopping simple, transparent and reliable.
+
+                    </p>
+
+
+                </div>
+
+
+
+
+
+
+                <div class="benefit-list">
+
+
+
+                    <div class="benefit-item">
+
+
+                        <div class="benefit-icon">
+
+                            <i class="bi bi-shield-check"></i>
+
+                        </div>
+
+
+
+                        <div>
+
+
+                            <h3>
+
+                                Verified Suppliers
+
+                            </h3>
+
+
+                            <p>
+
+                                Shop from approved businesses you can trust.
+
+                            </p>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+
+
+
+
+                    <div class="benefit-item">
+
+
+                        <div class="benefit-icon">
+
+                            <i class="bi bi-search"></i>
+
+                        </div>
+
+
+
+                        <div>
+
+
+                            <h3>
+
+                                Compare Options
+
+                            </h3>
+
+
+                            <p>
+
+                                Find suitable products and prices easily.
+
+                            </p>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+
+
+
+
+                    <div class="benefit-item">
+
+
+                        <div class="benefit-icon">
+
+                            <i class="bi bi-credit-card"></i>
+
+                        </div>
+
+
+
+                        <div>
+
+
+                            <h3>
+
+                                Secure Payments
+
+                            </h3>
+
+
+                            <p>
+
+                                Pay conveniently using trusted payment methods.
+
+                            </p>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                </div>
+
+
+
+            </div>
+
+
+
+
+
+
+            <!-- Visual -->
+
+
+            <div class="col-lg-6">
+
+
+                <div class="why-image-card">
+
+
+                    <img src="/assets/images/why-kenya-gas.webp"
+                         alt="Kenya Gas Marketplace"
+                         loading="lazy">
+
+
+
+                </div>
+
+
+            </div>
+
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- ==========================================================
+     Marketplace Statistics
+     ========================================================== -->
+
+
+<section class="statistics-section">
+
+
+    <div class="container">
+
+
+        <div class="row g-4">
+
+
+
+            <div class="col-6 col-lg-3">
+
+
+                <div class="stat-card">
+
+
+                    <i class="bi bi-shop"></i>
+
+
+                    <strong data-count="0"
+                            id="supplierCount">
+
+                        0+
+
+                    </strong>
+
+
+                    <span>
+
+                        Verified Suppliers
+
+                    </span>
+
+
+                </div>
+
+
+            </div>
+
+
+
+
+
+
+
+            <div class="col-6 col-lg-3">
+
+
+                <div class="stat-card">
+
+
+                    <i class="bi bi-box-seam"></i>
+
+
+                    <strong data-count="0"
+                            id="productCount">
+
+                        0+
+
+                    </strong>
+
+
+                    <span>
+
+                        Products Listed
+
+                    </span>
+
+
+                </div>
+
+
+            </div>
+
+
+
+
+
+
+
+            <div class="col-6 col-lg-3">
+
+
+                <div class="stat-card">
+
+
+                    <i class="bi bi-geo-alt"></i>
+
+
+                    <strong>
+
+                        47
+
+                    </strong>
+
+
+                    <span>
+
+                        Counties Covered
+
+                    </span>
+
+
+                </div>
+
+
+            </div>
+
+
+
+
+
+
+
+            <div class="col-6 col-lg-3">
+
+
+                <div class="stat-card">
+
+
+                    <i class="bi bi-people"></i>
+
+
+                    <strong data-count="0"
+                            id="customerCount">
+
+                        0+
+
+                    </strong>
+
+
+                    <span>
+
+                        Happy Customers
+
+                    </span>
+
+
+                </div>
+
+
+            </div>
+
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- ==========================================================
+     How It Works
+     ========================================================== -->
+
+
+<section class="how-section section-padding">
+
+
+    <div class="container">
+
+
+
+        <div class="section-header text-center">
+
+
+            <span class="section-subtitle">
+
+                Simple Process
+
+            </span>
+
+
+            <h2 class="section-title">
+
+                How Kenya Gas Works
+
+            </h2>
+
+
+        </div>
+
+
+
+
+
+        <div class="row g-4">
+
+
+
+            <div class="col-md-4">
+
+
+                <div class="process-card">
+
+
+                    <span>
+
+                        01
+
+                    </span>
+
+
+                    <h3>
+
+                        Search
+
+                    </h3>
+
+
+                    <p>
+
+                        Find gas products and suppliers near you.
+
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+
+
+
+            <div class="col-md-4">
+
+
+                <div class="process-card">
+
+
+                    <span>
+
+                        02
+
+                    </span>
+
+
+                    <h3>
+
+                        Order
+
+                    </h3>
+
+
+                    <p>
+
+                        Select your product and complete checkout.
+
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+
+
+
+            <div class="col-md-4">
+
+
+                <div class="process-card">
+
+
+                    <span>
+
+                        03
+
+                    </span>
+
+
+                    <h3>
+
+                        Receive
+
+                    </h3>
+
+
+                    <p>
+
+                        Get your order from your selected supplier.
+
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- ==========================================================
+     Newsletter Section
+     ========================================================== -->
+
+
+<section class="newsletter-section">
+
+
+    <div class="container">
+
+
+        <div class="newsletter-card">
+
+
+            <div>
+
+
+                <h2>
+
+                    Stay Updated
+
+                </h2>
+
+
+                <p>
+
+                    Receive marketplace updates, offers and gas tips.
+
+                </p>
+
+
+            </div>
+
+
+
+
+
+            <form id="newsletterForm"
+                  class="newsletter-form">
+
+
+                <input type="email"
+                       id="newsletterEmail"
+                       placeholder="Enter your email"
+                       required>
+
+
+
+                <button type="submit"
+                        class="btn btn-primary">
+
+
+                    Subscribe
+
+
+                </button>
+
+
+            </form>
+
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+      <!-- ==========================================================
+     Footer
+     ========================================================== -->
+
+<footer class="site-footer">
+
+
+    <div class="container">
+
+
+        <div class="row g-5">
+
+
+
+            <!-- Brand -->
+
+            <div class="col-lg-4">
+
+
+                <div class="footer-brand">
+
+
+                    <a href="/"
+                       class="footer-logo-link">
+
+
+                        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEig4yNkKOEND3ZSjv6V5xSnVE_V5bspkYwL1FH_496CICf-ut9hbogrkIAYe_ccWxZMj-h125Hjq0d9o6DYvkvsY3OwAz4X2AyraLagBuCwxc1M1f8UHWi7-gVxuuLaPvY3CRgWICglnQ7v2ExAhaOu-O5E6EgVnG58JxM9-b0RTDIJz84t-ucAdi7QjbEb/s1408/favicon.png"
+                             alt="Kenya Gas Marketplace"
+                             class="brand-logo">
+
+
+                    </a>
+
+
+
+
+                    <p>
+
+                        Kenya Gas Marketplace connects customers
+                        with verified LPG suppliers across Kenya.
+
+                    </p>
+
+
+
+                    <div class="footer-social">
+
+
+                        <a href="#"
+                           aria-label="Facebook">
+
+                            <i class="bi bi-facebook"></i>
+
+                        </a>
+
+
+                        <a href="#"
+                           aria-label="Instagram">
+
+                            <i class="bi bi-instagram"></i>
+
+                        </a>
+
+
+                        <a href="#"
+                           aria-label="Twitter">
+
+                            <i class="bi bi-twitter-x"></i>
+
+                        </a>
+
+
+                        <a href="#"
+                           aria-label="LinkedIn">
+
+                            <i class="bi bi-linkedin"></i>
+
+                        </a>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+
+
+
+            <!-- Customer Links -->
+
+
+            <div class="col-6 col-md-3 col-lg-2">
+
+
+                <h3 class="footer-title">
+
+                    Customers
+
+                </h3>
+
+
+
+                <ul class="footer-links">
+
+
+                    <li>
+                        <a href="/products/">
+                            Browse Products
+                        </a>
+                    </li>
+
+
+                    <li>
+                        <a href="/suppliers/">
+                            Find Suppliers
+                        </a>
+                    </li>
+
+
+                    <li>
+                        <a href="/orders/">
+                            My Orders
+                        </a>
+                    </li>
+
+
+                    <li>
+                        <a href="/account/">
+                            My Account
+                        </a>
+                    </li>
+
+
+                </ul>
+
+
+            </div>
+
+
+
+
+
+
+
+
+            <!-- Supplier Links -->
+
+
+            <div class="col-6 col-md-3 col-lg-2">
+
+
+                <h3 class="footer-title">
+
+                    Suppliers
+
+                </h3>
+
+
+
+                <ul class="footer-links">
+
+
+                    <li>
+                        <a href="/supplier/register/">
+                            Register Business
+                        </a>
+                    </li>
+
+
+                    <li>
+                        <a href="/supplier/login/">
+                            Supplier Login
+                        </a>
+                    </li>
+
+
+                    <li>
+                        <a href="/supplier/help/">
+                            Supplier Help
+                        </a>
+                    </li>
+
+
+                    <li>
+                        <a href="/supplier/terms/">
+                            Supplier Terms
+                        </a>
+                    </li>
+
+
+                </ul>
+
+
+            </div>
+
+
+
+
+
+
+
+
+            <!-- Support -->
+
+
+            <div class="col-md-6 col-lg-4">
+
+
+                <h3 class="footer-title">
+
+                    Contact & Support
+
+                </h3>
+
+
+
+                <ul class="footer-contact">
+
+
+                    <li>
+
+                        <i class="bi bi-envelope"></i>
+
+                        support@kenyagas.com
+
+                    </li>
+
+
+
+                    <li>
+
+                        <i class="bi bi-telephone"></i>
+
+                        +254 700 000 000
+
+                    </li>
+
+
+
+                    <li>
+
+                        <i class="bi bi-geo-alt"></i>
+
+                        Kenya
+
+                    </li>
+
+
+                </ul>
+
+
+
+
+
+                <div class="payment-methods">
+
+
+                    <span>
+
+                        Secure Payments
+
+                    </span>
+
+
+                    <div>
+
+
+                        <i class="bi bi-credit-card"></i>
+
+
+                        <strong>
+
+                            M-PESA
+
+                        </strong>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+    <!-- Footer Bottom -->
+
+
+    <div class="footer-bottom">
+
+
+        <div class="container">
+
+
+            <div class="row align-items-center">
+
+
+                <div class="col-md-6">
+
+
+                    <p class="mb-0">
+
+
+                        © <span id="currentYear"></span>
+                        Kenya Gas Marketplace.
+                        All rights reserved.
+
+
+                    </p>
+
+
+                </div>
+
+
+
+
+                <div class="col-md-6">
+
+
+                    <div class="footer-legal">
+
+
+                        <a href="/privacy/">
+                            Privacy Policy
+                        </a>
+
+
+                        <a href="/terms/">
+                            Terms of Service
+                        </a>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</footer>
+
+
+
+
+
+
+
+<!-- ==========================================================
+     JavaScript Assets
+     ========================================================== -->
+
+
+<script src="/assets/vendors/bootstrap/js/bootstrap.bundle.min.js">
+</script>
+
+
+
+
+<!-- Firebase & Application Modules -->
+
+<script type="module"
+        src="/assets/js/firebase.js">
+</script>
+
+
+<script type="module"
+        src="/assets/js/initializer.js">
+</script>
+
+
+<script type="module"
+        src="/assets/js/app.js">
+</script>
+
+
+
+
+
+<!-- Dynamic Copyright Year -->
+
+<script>
+
+    document.getElementById("currentYear").textContent =
+        new Date().getFullYear();
+
+</script>
+
+
+
+</div>
+<!-- End Application Wrapper -->
+
+
+</body>
+
+</html>
