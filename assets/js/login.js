@@ -354,3 +354,279 @@ if (loginForm) {
 
 }
 
+// ==========================================================
+// Google Sign In
+// ==========================================================
+
+async function loginWithGoogle() {
+
+    setLoading(true);
+
+    clearError();
+
+    try {
+
+        const credential = await signInWithPopup(
+
+            auth,
+
+            googleProvider
+
+        );
+
+        const user = credential.user;
+
+await createCustomerProfile(user);
+        // --------------------------------------------------
+        // Google accounts are normally verified
+        // --------------------------------------------------
+
+        if (!user.emailVerified) {
+
+            showError(
+
+                "Your Google account could not be verified."
+
+            );
+
+            await signOut(auth);
+
+            return;
+
+        }
+
+        // --------------------------------------------------
+        // Redirect According To Role
+        // --------------------------------------------------
+
+        await redirectAfterLogin();
+
+    }
+
+    catch (error) {
+
+        console.error(
+
+            "Google Sign-In Error:",
+
+            error
+
+        );
+
+        switch (error.code) {
+
+            case "auth/popup-closed-by-user":
+
+                showError(
+
+                    "Google sign-in was cancelled."
+
+                );
+
+                break;
+
+            case "auth/popup-blocked":
+
+                showError(
+
+                    "Your browser blocked the Google sign-in window."
+
+                );
+
+                break;
+
+            case "auth/network-request-failed":
+
+                showError(
+
+                    "Network error. Please check your internet connection."
+
+                );
+
+                break;
+
+            default:
+
+                showError(
+
+                    "Google sign-in failed. Please try again."
+
+                );
+
+        }
+
+    }
+
+    finally {
+
+        setLoading(false);
+
+    }
+
+}
+
+// ==========================================================
+// Google Login Button
+// ==========================================================
+
+if (googleButton) {
+
+    googleButton.addEventListener(
+
+        "click",
+
+        loginWithGoogle
+
+    );
+
+}
+
+// ==========================================================
+// Kenya Gas Marketplace
+// Login Page - Part 4
+// Startup & Session Management
+// ==========================================================
+
+import {
+
+    db,
+
+    now
+
+} from "./firebase.js";
+
+import {
+
+    doc,
+
+    getDoc,
+
+    setDoc
+
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+// ==========================================================
+// Create Customer Profile (Google First Login)
+// ==========================================================
+
+async function createCustomerProfile(user) {
+
+    try {
+
+        const userRef = doc(
+
+            db,
+
+            "users",
+
+            user.uid
+
+        );
+
+        const snapshot = await getDoc(userRef);
+
+        if (snapshot.exists()) {
+
+            return;
+
+        }
+
+        await setDoc(
+
+            userRef,
+
+            {
+
+                uid: user.uid,
+
+                role: "customer",
+
+                fullName: user.displayName || "",
+
+                email: user.email,
+
+                phone: user.phoneNumber || "",
+
+                profilePhoto: user.photoURL || "",
+
+                status: "active",
+
+                emailVerified: user.emailVerified,
+
+                createdAt: now(),
+
+                updatedAt: now()
+
+            }
+
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+
+            "Unable to create customer profile:",
+
+            error
+
+        );
+
+    }
+
+}
+
+// ==========================================================
+// Existing Logged-in User
+// ==========================================================
+
+async function checkExistingSession() {
+
+    if (!auth.currentUser) {
+
+        return;
+
+    }
+
+    await createCustomerProfile(
+
+        auth.currentUser
+
+    );
+
+    await redirectAfterLogin();
+
+}
+
+// ==========================================================
+// Auto Focus
+// ==========================================================
+
+function initializeForm() {
+
+    if (emailInput) {
+
+        emailInput.focus();
+
+    }
+
+}
+
+// ==========================================================
+// Startup
+// ==========================================================
+
+document.addEventListener(
+
+    "DOMContentLoaded",
+
+    async () => {
+
+        initializeForm();
+
+        await checkExistingSession();
+
+    }
+
+);
