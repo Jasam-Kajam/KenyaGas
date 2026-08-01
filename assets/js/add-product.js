@@ -1150,11 +1150,15 @@ async function uploadProductImages(
 // ==========================================================
 
 import {
-
-    addDoc,
-
+    doc,
+    setDoc,
+    getDoc,
+    collection,
+    query,
+    where,
+    limit,
+    getDocs,
     serverTimestamp
-
 }
 from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
@@ -1396,7 +1400,13 @@ async function createProduct() {
 
         );
 
-        return productId;
+        return {
+
+    productId,
+
+    slug
+
+};
 
     }
 
@@ -1466,15 +1476,11 @@ function resetProductForm() {
 // Success
 // ==========================================================
 
-function handleSuccess(productId) {
-
-    const destination =
-
-        `/product/${productId}`;
+function handleSuccess(result) {
 
     window.location.replace(
 
-        destination
+        `/product/${result.slug}`
 
     );
 
@@ -1500,25 +1506,25 @@ productForm?.addEventListener(
 
         try {
 
-            const productId =
+            const result =
 
-                await createProduct();
+    await createProduct();
 
-            if (!productId) {
+if (!result) {
 
-                return;
+    return;
 
-            }
+}
 
-            resetProductForm();
+resetProductForm();
 
-            handleSuccess(
+handleSuccess(
 
-                productId
+    result
 
-            );
-
-        }
+);
+        
+}
 
         catch (error) {
 
