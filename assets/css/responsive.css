@@ -1,0 +1,566 @@
+/*
+==========================================================
+Kenya Gas Marketplace
+File: assets/css/responsive.css
+Version: 3.0.0
+
+Responsive Layout Rules
+==========================================================
+*/
+
+
+/*
+==========================================================
+Extra Large Screens
+1400px+
+==========================================================
+*/
+
+@media (min-width: 1400px) {
+
+
+    .container {
+
+        max-width: 1320px;
+
+    }
+
+
+    .hero-section {
+
+        padding-top: 6rem;
+
+        padding-bottom: 6rem;
+
+    }
+
+
+}
+
+
+
+
+
+
+
+/*
+==========================================================
+Large Screens
+992px - 1399px
+==========================================================
+*/
+
+
+@media (max-width: 1199px) {
+
+
+    .navbar-nav .nav-link {
+
+        padding-left: .6rem !important;
+
+        padding-right: .6rem !important;
+
+    }
+
+
+
+    .header-actions {
+
+        gap: .5rem !important;
+
+    }
+
+
+
+    .hero-title {
+
+        font-size: 2.5rem;
+
+    }
+
+
+
+}
+
+
+
+
+
+
+
+/*
+==========================================================
+Tablet Devices
+768px - 991px
+==========================================================
+*/
+
+
+@media (max-width: 991px) {
+
+
+
+    /*
+    Header
+    */
+
+
+    .main-header {
+
+        height: auto;
+
+    }
+
+
+
+    .desktop-navigation {
+
+        display: none;
+
+    }
+
+
+
+    .header-actions .btn {
+
+        display: none;
+
+    }
+
+
+
+
+
+    /*
+    Hero
+    */
+
+
+    .hero-section {
+
+        text-align: center;
+
+    }
+
+
+
+    .hero-description {
+
+        margin-left: auto;
+
+        margin-right: auto;
+
+    }
+
+
+
+    .hero-actions {
+
+        justify-content: center;
+
+    }
+
+
+
+    .hero-trust {
+
+        justify-content: center;
+
+    }
+
+
+
+    .hero-image-wrapper {
+
+        margin-top: 2rem;
+
+    }
+
+
+
+
+
+    .floating-stat {
+
+        position: static;
+
+        margin-top: 1rem;
+
+    }
+
+
+
+
+
+    /*
+    Newsletter
+    */
+
+
+    .newsletter-card {
+
+        flex-direction: column;
+
+        text-align: center;
+
+    }
+
+
+
+
+
+    .newsletter-form {
+
+        width: 100%;
+
+    }
+
+
+
+}
+
+
+
+
+
+
+
+/*
+==========================================================
+Mobile Devices
+576px - 767px
+==========================================================
+*/
+
+
+@media (max-width: 767px) {
+
+
+
+    /*
+    Announcement Bar
+    */
+
+
+    .announcement-content {
+
+        flex-direction: column;
+
+        text-align: center;
+
+        gap: .25rem;
+
+    }
+
+
+
+
+
+    /*
+    Header
+    */
+
+
+    .brand-logo {
+
+        width: 45px;
+
+        height: 45px;
+
+    }
+
+
+
+    .brand-text strong {
+
+        font-size: .95rem;
+
+    }
+
+
+
+
+
+    /*
+    Hero
+    */
+
+
+    .hero-section {
+
+        padding: 3rem 0;
+
+    }
+
+
+
+    .hero-title {
+
+        font-size: 2rem;
+
+    }
+
+
+
+    .hero-actions {
+
+        flex-direction: column;
+
+    }
+
+
+
+    .hero-actions .btn {
+
+        width: 100%;
+
+    }
+
+
+
+
+
+    .search-form {
+
+        flex-direction: column;
+
+        padding: .75rem;
+
+    }
+
+
+
+    .search-form .btn {
+
+        width: 100%;
+
+    }
+
+
+
+
+
+    /*
+    Categories
+    */
+
+
+    .category-card {
+
+        padding: 1.25rem;
+
+    }
+
+
+
+
+
+    /*
+    Products
+    */
+
+
+    .product-image {
+
+        height: 180px;
+
+    }
+
+
+
+
+
+    /*
+    Supplier Cards
+    */
+
+
+    .supplier-card {
+
+        padding: 1rem;
+
+    }
+
+
+
+
+
+    /*
+    Statistics
+    */
+
+
+    .statistics-section {
+
+        padding: 2rem 0;
+
+    }
+
+
+
+    .stat-card strong {
+
+        font-size: 1.5rem;
+
+    }
+
+
+
+
+
+    /*
+    Footer
+    */
+
+
+    .footer-bottom .row {
+
+        text-align: center;
+
+    }
+
+
+
+    .footer-legal {
+
+        justify-content: center;
+
+        margin-top: 1rem;
+
+    }
+
+
+
+}
+
+
+
+
+
+
+
+/*
+==========================================================
+Small Mobile Devices
+Below 576px
+==========================================================
+*/
+
+
+@media (max-width: 575px) {
+
+
+
+    .container {
+
+        padding-left: 1rem;
+
+        padding-right: 1rem;
+
+    }
+
+
+
+
+
+    .section-padding {
+
+        padding-top: 3rem;
+
+        padding-bottom: 3rem;
+
+    }
+
+
+
+
+
+    .section-title {
+
+        font-size: 1.6rem;
+
+    }
+
+
+
+
+
+    .hero-badge {
+
+        font-size: .75rem;
+
+    }
+
+
+
+
+
+    .hero-trust {
+
+        flex-direction: column;
+
+        align-items: center;
+
+    }
+
+
+
+
+
+    .header-icon-btn {
+
+        width: 38px;
+
+        height: 38px;
+
+    }
+
+
+
+
+
+    .newsletter-form {
+
+        flex-direction: column;
+
+    }
+
+
+
+}
+
+
+
+
+
+
+
+/*
+==========================================================
+Very Large Displays
+1600px+
+==========================================================
+*/
+
+
+@media (min-width: 1600px) {
+
+
+
+    body {
+
+        font-size: 17px;
+
+    }
+
+
+
+    .hero-title {
+
+        font-size: 4rem;
+
+    }
+
+
+
+}
