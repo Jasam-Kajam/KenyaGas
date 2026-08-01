@@ -564,3 +564,25 @@ Very Large Displays
 
 
 }
+
+
+/* Hide desktop menu on small screens */
+
+@media(max-width:991px){
+
+    #desktopNavigation{
+        display:none !important;
+    }
+
+}
+
+
+/* Hide mobile toggle on desktop */
+
+@media(min-width:992px){
+
+    .navbar-toggler{
+        display:none;
+    }
+
+}
