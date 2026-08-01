@@ -740,3 +740,47 @@ Professional App Loader
     transition: .4s ease;
 
     }
+
+
+/* ======================================================
+   FIX MOBILE MENU DUPLICATION
+   Kenya Gas Marketplace
+====================================================== */
+
+
+/* Hide mobile offcanvas by default */
+.offcanvas {
+    visibility: hidden;
+}
+
+
+/* Allow Bootstrap to show it when opened */
+.offcanvas.show {
+    visibility: visible;
+}
+
+
+/* Desktop navigation only */
+@media (min-width: 992px){
+
+    .navbar-toggler {
+        display:none !important;
+    }
+
+
+    .offcanvas {
+        display:none !important;
+    }
+
+}
+
+
+
+/* Mobile only */
+@media (max-width:991px){
+
+    #desktopNavigation {
+        display:none !important;
+    }
+
+}
