@@ -160,19 +160,19 @@ Header
 
     <nav class="navbar">
 
-        <a href="/"
-           class="logo">
+        <!-- Logo -->
+        <a href="/" class="logo">
 
-            <img src="/assets/images/logo.png"
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEig4yNkKOEND3ZSjv6V5xSnVE_V5bspkYwL1FH_496CICf-ut9hbogrkIAYe_ccWxZMj-h125Hjq0d9o6DYvkvsY3OwAz4X2AyraLagBuCwxc1M1f8UHWi7-gVxuuLaPvY3CRgWICglnQ7v2ExAhaOu-O5E6EgVnG58JxM9-b0RTDIJz84t-ucAdi7QjbEb/s1408/favicon.png"
                  alt="Kenya Gas Marketplace">
 
         </a>
 
-        <!-- Mobile Toggle -->
+        <!-- Mobile Menu -->
 
-        <button id="menuToggle"
-                class="menu-toggle"
-                aria-label="Open navigation">
+        <button class="menu-toggle"
+                id="menuToggle"
+                aria-label="Toggle Navigation">
 
             <i class="fas fa-bars"></i>
 
@@ -182,54 +182,38 @@ Header
 
         <ul class="nav-links">
 
-            <li>
-                <a href="/">Home</a>
-            </li>
+            <li><a href="/">Home</a></li>
 
-            <li>
-                <a href="/products/"
-                   class="active">
-                    Products
-                </a>
-            </li>
+            <li><a href="/products/">Products</a></li>
 
-            <li>
-                <a href="/suppliers/">
-                    Suppliers
-                </a>
-            </li>
+            <li><a href="/suppliers/">Suppliers</a></li>
 
-            <li>
-                <a href="/about/">
-                    About
-                </a>
-            </li>
+            <li><a href="/about/">About</a></li>
 
-            <li>
-                <a href="/contact/">
-                    Contact
-                </a>
-            </li>
+            <li><a href="/contact/">Contact</a></li>
 
         </ul>
 
-        <!-- Right Navigation -->
+        <!-- Right Side -->
 
         <div class="nav-actions">
 
-            <a href="/wishlist/"
-               aria-label="Wishlist">
+            <a href="/wishlist/" class="nav-icon">
 
                 <i class="far fa-heart"></i>
 
             </a>
 
-            <a href="/cart/"
-               aria-label="Shopping Cart">
+            <a href="/cart/" class="nav-icon">
 
                 <i class="fas fa-shopping-cart"></i>
 
-                <span id="cartCount">0</span>
+                <span class="cart-badge"
+                      id="cartCount">
+
+                    0
+
+                </span>
 
             </a>
 
@@ -245,7 +229,7 @@ Header
     </nav>
 
 </header>
-
+     
 <!-- ======================================================
 Hero
 ====================================================== -->
