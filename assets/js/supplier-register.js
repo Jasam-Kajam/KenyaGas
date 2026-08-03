@@ -57,7 +57,24 @@ import {
 // ==========================================================
 // DOM Elements
 // ==========================================================
-const countySelect = document.getElementById("county");
+
+const supplierForm =
+    document.getElementById("supplierRegisterForm");
+
+const businessName =
+    document.getElementById("businessName");
+
+const ownerName =
+    document.getElementById("ownerName");
+
+const email =
+    document.getElementById("email");
+
+const phone =
+    document.getElementById("phone");
+
+const county =
+    const countySelect = document.getElementById("county");
 const townSelect = document.getElementById("town");
 
 // Load counties
@@ -92,27 +109,6 @@ countySelect.addEventListener("change", () => {
     });
 
 });
-
-const supplierForm =
-    document.getElementById("supplierRegisterForm");
-
-const businessName =
-    document.getElementById("businessName");
-
-const ownerName =
-    document.getElementById("ownerName");
-
-const email =
-    document.getElementById("email");
-
-const phone =
-    document.getElementById("phone");
-
-const county =
-    document.getElementById("county");
-
-const town =
-    document.getElementById("town");
 
 const address =
     document.getElementById("address");
