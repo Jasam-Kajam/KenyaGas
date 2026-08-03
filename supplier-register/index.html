@@ -1,1119 +1,2008 @@
-<!DOCTYPE html>
-<html lang="en">
+// ==========================================================
+// Kenya Gas Marketplace
+// File: assets/js/supplier-register.js
+// Version: 1.0.0
+// Part 1: Imports, Constants, DOM Cache, Global State
+// ==========================================================
 
-<head>
 
-<!-- ======================================================
-     Kenya Gas Marketplace
-     File: supplier/register/index.html
-     Version: 1.0.0
-     Supplier Registration
-====================================================== -->
+// ==========================================================
+// Firebase Imports
+// ==========================================================
 
-<meta charset="UTF-8">
+import {
 
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+    auth,
 
-<meta http-equiv="X-UA-Compatible"
-      content="IE=edge">
+    db,
 
-<!-- ======================================================
-SEO
-====================================================== -->
+    storage,
 
-<title>
+    now
 
-Become a Verified LPG Supplier | Kenya Gas Marketplace
+} from "./firebase.js";
 
-</title>
 
-<meta name="description"
-      content="Register your LPG business on Kenya Gas Marketplace and connect with thousands of customers across Kenya.">
 
-<meta name="keywords"
-      content="LPG Supplier Registration, Kenya Gas Marketplace, Gas Dealers Kenya, LPG Business">
+// ==========================================================
+// Firebase Authentication Functions
+// ==========================================================
 
-<meta name="author"
-      content="Kenya Gas Marketplace">
+import {
 
-<meta name="robots"
-      content="index,follow">
+    createUserWithEmailAndPassword,
 
-<link rel="canonical"
-      href="https://kenyagas.co.ke/supplier/register/">
+    sendEmailVerification
 
-<!-- ======================================================
-Open Graph
-====================================================== -->
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
-<meta property="og:type"
-      content="website">
 
-<meta property="og:title"
-      content="Become a Verified LPG Supplier">
 
-<meta property="og:description"
-      content="Join Kenya Gas Marketplace and grow your LPG business.">
+// ==========================================================
+// Firebase Firestore Functions
+// ==========================================================
 
-<meta property="og:image"
-      content="/assets/images/og-image.jpg">
+import {
 
-<meta property="og:url"
-      content="https://kenyagas.co.ke/supplier/register/">
+    doc,
 
-<meta property="og:site_name"
-      content="Kenya Gas Marketplace">
+    setDoc
 
-<!-- ======================================================
-Twitter
-====================================================== -->
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
-<meta name="twitter:card"
-      content="summary_large_image">
+// ==========================================================
+// Kenya Counties & Towns Data
+// ==========================================================
 
-<meta name="twitter:title"
-      content="Become a Verified LPG Supplier">
+import {
+    kenyaCounties,
+    townsData
+} from "./counties.js";
 
-<meta name="twitter:description"
-      content="Register your LPG business today.">
+// ==========================================================
+// Firebase Storage Functions
+// ==========================================================
 
-<meta name="twitter:image"
-      content="/assets/images/og-image.jpg">
+import {
 
-<!-- ======================================================
-Favicon
-====================================================== -->
+    ref,
 
-<link rel="icon"
-      href="/assets/images/favicon.png">
+    uploadBytes,
 
-<!-- ======================================================
-Google Fonts
-====================================================== -->
+    getDownloadURL
 
-<link rel="preconnect"
-      href="https://fonts.googleapis.com">
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-storage.js";
 
-<link rel="preconnect"
-      href="https://fonts.gstatic.com"
-      crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet">
 
-<!-- ======================================================
-Font Awesome
-====================================================== -->
 
-<link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+// ==========================================================
+// Constants
+// ==========================================================
 
-<!-- ======================================================
-Global CSS
-====================================================== -->
+const MAX_LOGO_SIZE = 2 * 1024 * 1024;
 
-<link rel="stylesheet"
-      href="/assets/css/variables.css">
 
-<link rel="stylesheet"
-      href="/assets/css/utilities.css">
+const ALLOWED_LOGO_TYPES = [
 
-<link rel="stylesheet"
-      href="/assets/css/components.css">
+    "image/jpeg",
 
-<link rel="stylesheet"
-      href="/assets/css/app.css">
+    "image/png",
 
-<link rel="stylesheet"
-      href="/assets/css/responsive.css">
+    "image/webp"
 
-</head>
+];
 
-<body>
 
-<!-- ======================================================
-Page Loader
-====================================================== -->
 
-<div id="pageLoader"
-     class="page-loader">
 
-    <div class="loader-spinner"></div>
+// ==========================================================
+// DOM Cache
+// ==========================================================
 
-</div>
 
-<!-- ======================================================
-Header
-====================================================== -->
+// Registration Form
 
-<header class="site-header">
+const supplierRegisterForm =
+    document.getElementById(
+        "supplierRegisterForm"
+    );
 
-    <nav class="navbar">
 
-        <!-- Logo -->
+// Error
 
-        <a href="/"
-           class="logo">
+const registerError =
+    document.getElementById(
+        "registerError"
+    );
 
-            <img src="/assets/images/favicon.png"
-                 alt="Kenya Gas Marketplace">
 
-        </a>
+// Business Information
 
-        <!-- Mobile Menu -->
+const businessName =
+    document.getElementById(
+        "businessName"
+    );
 
-        <button id="menuToggle"
-                class="menu-toggle"
-                aria-label="Toggle Navigation">
 
-            <i class="fas fa-bars"></i>
+const ownerName =
+    document.getElementById(
+        "ownerName"
+    );
 
-        </button>
 
-        <!-- Navigation -->
+const email =
+    document.getElementById(
+        "email"
+    );
 
-        <ul class="nav-links">
 
-            <li><a href="/">Home</a></li>
+const phone =
+    document.getElementById(
+        "phone"
+    );
 
-            <li><a href="/products/">Products</a></li>
 
-            <li><a href="/suppliers/">Suppliers</a></li>
+// Location
 
-            <li><a href="/about/">About</a></li>
+const county =
+    document.getElementById(
+        "county"
+    );
 
-            <li><a href="/contact/">Contact</a></li>
 
-        </ul>
+const town =
+    document.getElementById(
+        "town"
+    );
 
-        <!-- Right Actions -->
 
-        <div class="nav-actions">
+const address =
+    document.getElementById(
+        "address"
+    );
 
-            <a href="/login/"
-               class="btn btn-outline">
 
-                Login
+// Verification
 
-            </a>
+const licenceNumber =
+    document.getElementById(
+        "licenceNumber"
+    );
 
-            <a href="/supplier/register/"
-               class="btn btn-primary">
 
-                Become a Supplier
+const kraPin =
+    document.getElementById(
+        "kraPin"
+    );
 
-            </a>
 
-        </div>
+// Logo
 
-    </nav>
+const businessLogo =
+    document.getElementById(
+        "businessLogo"
+    );
 
-</header>
-<!-- ======================================================
-Hero Section
-====================================================== -->
 
-<section class="page-hero supplier-hero">
+const logoPreview =
+    document.getElementById(
+        "logoPreview"
+    );
 
-    <div class="container">
 
-        <!-- Breadcrumb -->
+// Security
 
-        <nav class="breadcrumb">
+const password =
+    document.getElementById(
+        "password"
+    );
 
-            <a href="/">Home</a>
 
-            <span>/</span>
+const confirmPassword =
+    document.getElementById(
+        "confirmPassword"
+    );
 
-            <span>Supplier Registration</span>
 
-        </nav>
+const passwordStrengthBar =
+    document.getElementById(
+        "passwordStrengthBar"
+    );
 
-        <div class="hero-content">
 
-            <span class="hero-badge">
+const passwordStrengthText =
+    document.getElementById(
+        "passwordStrengthText"
+    );
 
-                <i class="fas fa-award"></i>
 
-                Verified Supplier Programme
+const agreeTerms =
+    document.getElementById(
+        "agreeTerms"
+    );
 
-            </span>
 
-            <h1>
+// Submit
 
-                Become a Trusted LPG Supplier in Kenya
+const registerButton =
+    document.getElementById(
+        "registerButton"
+    );
 
-            </h1>
 
-            <p>
+const registerSpinner =
+    document.getElementById(
+        "registerSpinner"
+    );
 
-                Register your LPG business, reach customers across
-                Kenya, receive online orders, manage deliveries,
-                and grow your business through Kenya Gas Marketplace.
 
-            </p>
 
-        </div>
 
-    </div>
+// ==========================================================
+// Global State
+// ==========================================================
 
-</section>
+let logoURL = "";
 
-<!-- ======================================================
-Supplier Registration
-====================================================== -->
+let isSubmitting = false;
 
-<section class="section">
 
-    <div class="container">
 
-        <div class="register-layout">
 
-            <!-- ==========================================
-                 Benefits
-            ========================================== -->
 
-            <aside class="register-sidebar">
+// ==========================================================
+// End Part 1
+// ==========================================================
 
-                <div class="card">
 
-                    <h2>
+// ==========================================================
+// Part 2
+// Utilities & Loading/Error Helpers
+// ==========================================================
 
-                        Why Join Kenya Gas?
 
-                    </h2>
+// ==========================================================
+// Show Error Message
+// ==========================================================
 
-                    <ul class="feature-list">
+function showError(message) {
 
-                        <li>
 
-                            <i class="fas fa-check-circle"></i>
+    if (!registerError) {
 
-                            Reach thousands of customers nationwide.
+        return;
 
-                        </li>
+    }
 
-                        <li>
 
-                            <i class="fas fa-check-circle"></i>
+    registerError.textContent = message;
 
-                            Receive online LPG orders 24/7.
 
-                        </li>
+    registerError.classList.remove(
+        "d-none"
+    );
 
-                        <li>
 
-                            <i class="fas fa-check-circle"></i>
+}
 
-                            Build trust with a verified supplier badge.
 
-                        </li>
 
-                        <li>
+// ==========================================================
+// Clear Error Message
+// ==========================================================
 
-                            <i class="fas fa-check-circle"></i>
+function clearError() {
 
-                            Manage products and orders easily.
 
-                        </li>
+    if (!registerError) {
 
-                        <li>
+        return;
 
-                            <i class="fas fa-check-circle"></i>
+    }
 
-                            Secure payments and order tracking.
 
-                        </li>
+    registerError.textContent = "";
 
-                    </ul>
 
-                </div>
+    registerError.classList.add(
+        "d-none"
+    );
 
-            </aside>
 
-            <!-- ==========================================
-                 Registration Form
-            ========================================== -->
+}
 
-            <div class="card">
 
-                <div class="section-header">
 
-                    <h2>
+// ==========================================================
+// Set Loading State
+// ==========================================================
 
-                        Supplier Registration
+function setLoading(state) {
 
-                    </h2>
 
-                    <p>
+    if (!registerButton) {
 
-                        Complete the form below to create your supplier account.
+        return;
 
-                    </p>
+    }
 
-                </div>
 
-                <form id="supplierRegisterForm"
-                      autocomplete="on">
 
-                    <!-- Error Message -->
+    isSubmitting = state;
 
-                    <div id="registerError"
-                         class="alert alert-danger d-none">
 
-                    </div>
 
-                    <!-- Business Information -->
+    registerButton.disabled = state;
 
-                    <h3>
 
-                        Business Information
 
-                    </h3>
+    if (registerSpinner) {
 
-                    <div class="form-grid">
 
-                        <div class="form-group">
+        if (state) {
 
-                            <label for="businessName">
 
-                                Business Name
+            registerSpinner.classList.remove(
+                "d-none"
+            );
 
-                            </label>
 
-                            <input
-                                type="text"
-                                id="businessName"
-                                required>
+        } else {
 
-                        </div>
 
-                        <div class="form-group">
+            registerSpinner.classList.add(
+                "d-none"
+            );
 
-                            <label for="ownerName">
 
-                                Owner Name
+        }
 
-                            </label>
+    }
 
-                            <input
-                                type="text"
-                                id="ownerName"
-                                required>
 
-                        </div>
 
-                    </div>
+    const buttonText =
+        registerButton.querySelector(
+            "span"
+        );
 
-                    <!-- Contact -->
 
-                    <div class="form-grid">
+    if (buttonText) {
 
-                        <div class="form-group">
 
-                            <label for="email">
+        buttonText.textContent = state
 
-                                Email Address
+            ? "Creating Account..."
 
-                            </label>
+            : "Register Supplier";
 
-                            <input
-                                type="email"
-                                id="email"
-                                required>
 
-                        </div>
+    }
 
-                        <div class="form-group">
 
-                            <label for="phone">
+}
 
-                                Mobile Number
 
-                            </label>
 
-                            <input
-                                type="tel"
-                                id="phone"
-                                placeholder="+2547XXXXXXXX"
-                                required>
 
-                        </div>
+// ==========================================================
+// Sanitize Input
+// ==========================================================
 
-          </div>
+function sanitizeInput(value) {
 
-          <!-- ======================================================
-Location
-====================================================== -->
 
-<h3>
+    if (!value) {
 
-    Business Location
+        return "";
 
-</h3>
+    }
 
-<div class="form-grid">
 
-    <div class="form-group">
+    return value
 
-        <label for="county">
+        .trim()
 
-            County
+        .replace(
+            /</g,
+            "&lt;"
+        )
 
-        </label>
+        .replace(
+            />/g,
+            "&gt;"
+        );
 
-        <select id="county"
-                required>
+}
 
-            <option value="">
 
-                Select County
 
-            </option>
 
-        </select>
+// ==========================================================
+// Email Validation Helper
+// ==========================================================
 
-    </div>
+function isValidEmail(emailValue) {
 
-    <div class="form-group">
 
-        <label for="town">
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
-            Town
+        .test(
+            emailValue
+        );
 
-        </label>
 
-        <select id="town"
-                required>
+}
 
-            <option value="">
 
-                Select Town
 
-            </option>
 
-        </select>
+// ==========================================================
+// Kenyan Phone Validation Helper
+// ==========================================================
 
-    </div>
+function isValidKenyanPhone(phoneValue) {
 
-</div>
 
-<div class="form-group">
+    return /^(\+254|254|0)7\d{8}$/
 
-    <label for="address">
+        .test(
+            phoneValue
+        );
 
-        Business Address
 
-    </label>
+}
 
-    <textarea
 
-        id="address"
 
-        rows="4"
 
-        placeholder="Street, Building, Landmark"
+// ==========================================================
+// Password Strength Calculation
+// ==========================================================
 
-        required>
+function calculatePasswordStrength(value) {
 
-    </textarea>
 
-</div>
+    let strength = 0;
 
-<!-- ======================================================
-Business Verification
-====================================================== -->
 
-<h3>
 
-    Business Verification
+    if (value.length >= 8) {
 
-</h3>
+        strength++;
 
-<div class="form-grid">
+    }
 
-    <div class="form-group">
 
-        <label for="licenceNumber">
+    if (/[A-Z]/.test(value)) {
 
-            Business Licence Number
+        strength++;
 
-        </label>
+    }
 
-        <input
 
-            type="text"
+    if (/[0-9]/.test(value)) {
 
-            id="licenceNumber"
+        strength++;
 
-            placeholder="Business Licence Number">
+    }
 
-    </div>
 
-    <div class="form-group">
+    if (/[^A-Za-z0-9]/.test(value)) {
 
-        <label for="kraPin">
+        strength++;
 
-            KRA PIN
+    }
 
-        </label>
 
-        <input
 
-            type="text"
+    return strength;
 
-            id="kraPin"
 
-            placeholder="A123456789B">
+}
 
-    </div>
 
-</div>
 
-<!-- ======================================================
-Business Logo
-====================================================== -->
 
-<h3>
+// ==========================================================
+// Update Password Strength UI
+// ==========================================================
 
-    Business Logo
+function updatePasswordStrength(value) {
 
-</h3>
 
-<div class="form-group">
+    const strength =
+        calculatePasswordStrength(
+            value
+        );
 
-    <label for="businessLogo">
 
-        Upload Business Logo
 
-    </label>
+    const labels = [
 
-    <input
+        "Weak",
 
-        type="file"
+        "Fair",
 
-        id="businessLogo"
+        "Good",
 
-        accept=".jpg,.jpeg,.png,.webp"
+        "Strong",
 
-        required>
+        "Excellent"
 
-    <small>
+    ];
 
-        Accepted formats: JPG, PNG, WEBP (Maximum 2 MB)
 
-    </small>
 
-</div>
+    if (passwordStrengthBar) {
 
-<img
 
-    id="logoPreview"
+        passwordStrengthBar.style.width =
 
-    class="d-none"
+            `${strength * 25}%`;
 
-    alt="Business Logo Preview">
 
-                 <!-- ======================================================
-Account Security
-====================================================== -->
+    }
 
-<h3>
 
-    Account Security
 
-</h3>
+    if (passwordStrengthText) {
 
-<div class="form-grid">
 
-    <div class="form-group">
+        passwordStrengthText.textContent =
 
-        <label for="password">
+            labels[strength];
 
-            Password
 
-        </label>
+    }
 
-        <input
 
-            type="password"
+}
 
-            id="password"
 
-            placeholder="Create a strong password"
 
-            required>
+// ==========================================================
+// End Part 2
+// ==========================================================
 
-        <!-- Password Strength -->
 
-        <div class="password-strength">
+// ==========================================================
+// Part 3
+// County & Town Loader
+// ==========================================================
 
-            <div id="passwordStrengthBar"></div>
 
-        </div>
+// ==========================================================
+// Load Counties
+// ==========================================================
 
-        <small id="passwordStrengthText">
+function loadCounties() {
 
-            Weak
 
-        </small>
+    if (!county) {
 
-    </div>
+        return;
 
-    <div class="form-group">
+    }
 
-        <label for="confirmPassword">
 
-            Confirm Password
+    county.innerHTML = `
 
-        </label>
+        <option value="">
 
-        <input
+            Select County
 
-            type="password"
+        </option>
 
-            id="confirmPassword"
+    `;
 
-            placeholder="Confirm your password"
 
-            required>
 
-    </div>
+    kenyaCounties.forEach((item) => {
 
-</div>
 
-<!-- ======================================================
-Terms & Conditions
-====================================================== -->
+        const option =
+            document.createElement(
+                "option"
+            );
 
-<div class="form-group checkbox-group">
 
-    <label>
+        option.value = item;
 
-        <input
 
-            type="checkbox"
+        option.textContent = item;
 
-            id="agreeTerms"
 
-            required>
+        county.appendChild(
+            option
+        );
 
-        I agree to the
 
-        <a href="/terms/">
+    });
 
-            Terms & Conditions
 
-        </a>
+}
 
-        and
 
-        <a href="/privacy/">
 
-            Privacy Policy
 
-        </a>
+// ==========================================================
+// Load Towns By County
+// ==========================================================
 
-    </label>
+function loadTowns(selectedCounty) {
 
-</div>
 
-<!-- ======================================================
-Submit Button
-====================================================== -->
+    if (!town) {
 
-<div class="form-actions">
+        return;
 
-    <button
+    }
 
-        type="submit"
 
-        id="registerButton"
 
-        class="btn btn-primary btn-lg">
+    town.innerHTML = `
 
-        <span>
+        <option value="">
 
-            Register Supplier
+            Select Town
 
-        </span>
+        </option>
 
-        <div
+    `;
 
-            id="registerSpinner"
 
-            class="spinner-border d-none">
 
-        </div>
+    if (!selectedCounty) {
 
-    </button>
 
-</div>
+        town.disabled = true;
 
-<p class="form-footer">
 
-    Already have a supplier account?
+        return;
 
-    <a href="/supplier/login/">
 
-        Login here
+    }
 
-    </a>
 
-</p>
 
-</form>
+    const availableTowns =
 
-</div>
+        townsData[selectedCounty] || [];
 
-</div>
 
-</div>
 
-</section>
 
-<!-- ======================================================
-Newsletter
-====================================================== -->
+    availableTowns.forEach((item) => {
 
-<section class="newsletter-section">
 
-    <div class="container">
+        const option =
 
-        <div class="newsletter-card">
+            document.createElement(
+                "option"
+            );
 
-            <div class="newsletter-content">
 
-                <h2>
 
-                    Stay Updated
+        option.value = item;
 
-                </h2>
 
-                <p>
+        option.textContent = item;
 
-                    Receive LPG supplier news, product updates,
-                    marketplace offers and important announcements.
 
-                </p>
 
-            </div>
+        town.appendChild(
+            option
+        );
 
-            <form
 
-                id="newsletterForm"
+    });
 
-                class="newsletter-form">
 
-                <input
 
-                    type="email"
+    town.disabled = false;
 
-                    id="newsletterEmail"
 
-                    placeholder="Enter your email address"
+}
 
-                    required>
 
-                <button
 
-                    type="submit"
 
-                    class="btn btn-primary">
+// ==========================================================
+// County Change Handler
+// ==========================================================
 
-                    Subscribe
+function handleCountyChange() {
 
-                </button>
 
-            </form>
+    if (!county) {
 
-        </div>
+        return;
 
-    </div>
+    }
 
-</section>
 
-  <!-- ======================================================
-Floating Cart
-====================================================== -->
 
-<a
+    loadTowns(
 
-    href="/cart/"
+        county.value
 
-    id="floatingCart"
+    );
 
-    class="floating-cart"
 
-    aria-label="Shopping Cart">
+}
 
-    <i class="fas fa-shopping-cart"></i>
 
-    <span id="floatingCartCount">
 
-        0
+// ==========================================================
+// End Part 3
+// ==========================================================
 
-    </span>
 
-</a>
+// ==========================================================
+// Part 4
+// Form Validation
+// ==========================================================
 
-<!-- ======================================================
-Back To Top
-====================================================== -->
 
-<button
+// ==========================================================
+// Validate Supplier Registration Form
+// ==========================================================
 
-    id="backToTop"
+function validateSupplierForm() {
 
-    class="back-to-top"
 
-    aria-label="Back To Top">
+    clearError();
 
-    <i class="fas fa-chevron-up"></i>
 
-</button>
 
-<!-- ======================================================
-Footer
-====================================================== -->
+    // Business Name
 
-<footer class="site-footer">
+    if (!businessName.value.trim()) {
 
-    <div class="container">
 
-        <div class="footer-grid">
+        showError(
+            "Business name is required."
+        );
 
-            <!-- About -->
 
-            <div class="footer-column">
+        businessName.focus();
 
-                <img
 
-                    src="/assets/images/logo-light.png"
+        return false;
 
-                    alt="Kenya Gas Marketplace"
+    }
 
-                    class="footer-logo">
 
-                <p>
 
-                    Kenya's trusted LPG marketplace connecting
-                    customers with verified suppliers
-                    across all 47 counties.
 
-                </p>
+    // Owner Name
 
-            </div>
+    if (!ownerName.value.trim()) {
 
-            <!-- Marketplace -->
 
-            <div class="footer-column">
+        showError(
+            "Owner name is required."
+        );
 
-                <h3>
 
-                    Marketplace
+        ownerName.focus();
 
-                </h3>
 
-                <ul>
+        return false;
 
-                    <li>
+    }
 
-                        <a href="/products/">
 
-                            Products
 
-                        </a>
 
-                    </li>
+    // Email
 
-                    <li>
+    const emailValue =
+        email.value.trim();
 
-                        <a href="/suppliers/">
 
-                            Suppliers
 
-                        </a>
+    if (!emailValue) {
 
-                    </li>
 
-                    <li>
+        showError(
+            "Email address is required."
+        );
 
-                        <a href="/supplier/register/">
 
-                            Become a Supplier
+        email.focus();
 
-                        </a>
 
-                    </li>
+        return false;
 
-                    <li>
 
-                        <a href="/track-order/">
+    }
 
-                            Track Order
 
-                        </a>
 
-                    </li>
+    if (!isValidEmail(emailValue)) {
 
-                </ul>
 
-            </div>
+        showError(
+            "Enter a valid email address."
+        );
 
-            <!-- Support -->
 
-            <div class="footer-column">
+        email.focus();
 
-                <h3>
 
-                    Support
+        return false;
 
-                </h3>
 
-                <ul>
+    }
 
-                    <li>
 
-                        <a href="/help/">
 
-                            Help Centre
 
-                        </a>
+    // Phone
 
-                    </li>
+    const phoneValue =
+        phone.value.trim();
 
-                    <li>
 
-                        <a href="/faq/">
 
-                            FAQs
+    if (!phoneValue) {
 
-                        </a>
 
-                    </li>
+        showError(
+            "Phone number is required."
+        );
 
-                    <li>
 
-                        <a href="/privacy/">
+        phone.focus();
 
-                            Privacy Policy
 
-                        </a>
+        return false;
 
-                    </li>
 
-                    <li>
+    }
 
-                        <a href="/terms/">
 
-                            Terms & Conditions
 
-                        </a>
+    if (!isValidKenyanPhone(phoneValue)) {
 
-                    </li>
 
-                </ul>
+        showError(
+            "Enter a valid Kenyan phone number."
+        );
 
-            </div>
 
-            <!-- Contact -->
+        phone.focus();
 
-            <div class="footer-column">
 
-                <h3>
+        return false;
 
-                    Contact
 
-                </h3>
+    }
 
-                <p>
 
-                    <i class="fas fa-phone"></i>
 
-                    +254 XXX XXX XXX
 
-                </p>
+    // Location
 
-                <p>
+    if (!county.value) {
 
-                    <i class="fas fa-envelope"></i>
 
-                    info@kenyagas.co.ke
+        showError(
+            "Please select a county."
+        );
 
-                </p>
 
-                <div class="footer-social">
+        county.focus();
 
-                    <a href="#">
 
-                        <i class="fab fa-facebook-f"></i>
+        return false;
 
-                    </a>
 
-                    <a href="#">
+    }
 
-                        <i class="fab fa-instagram"></i>
 
-                    </a>
 
-                    <a href="#">
+    if (!town.value) {
 
-                        <i class="fab fa-x-twitter"></i>
 
-                    </a>
+        showError(
+            "Please select a town."
+        );
 
-                    <a href="#">
 
-                        <i class="fab fa-youtube"></i>
+        town.focus();
 
-                    </a>
 
-                </div>
+        return false;
 
-            </div>
 
-        </div>
+    }
 
-        <div class="footer-bottom">
 
-            <p>
 
-                &copy;
 
-                <span id="currentYear"></span>
+    // Address
 
-                Kenya Gas Marketplace.
+    if (!address.value.trim()) {
 
-                All Rights Reserved.
 
-            </p>
+        showError(
+            "Business address is required."
+        );
 
-        </div>
 
-    </div>
+        address.focus();
 
-</footer>
 
-<!-- ======================================================
-JavaScript
-====================================================== -->
+        return false;
 
-<script type="module"
-        src="/assets/js/firebase.js"></script>
 
-<script type="module"
-        src="/assets/js/auth.js"></script>
+    }
 
-<script type="module"
-        src="/assets/js/supplier-register.js"></script>
 
-<!-- ======================================================
-Page Initialization
-====================================================== -->
 
-<script>
+
+    // Logo
+
+    if (!businessLogo.files.length) {
+
+
+        showError(
+            "Business logo is required."
+        );
+
+
+        businessLogo.focus();
+
+
+        return false;
+
+
+    }
+
+
+
+
+    // Password
+
+    const passwordValue =
+        password.value;
+
+
+
+    if (!passwordValue) {
+
+
+        showError(
+            "Password is required."
+        );
+
+
+        password.focus();
+
+
+        return false;
+
+
+    }
+
+
+
+    if (passwordValue.length < 8) {
+
+
+        showError(
+            "Password must be at least 8 characters."
+        );
+
+
+        password.focus();
+
+
+        return false;
+
+
+    }
+
+
+
+
+    // Confirm Password
+
+    if (
+        passwordValue !==
+        confirmPassword.value
+    ) {
+
+
+        showError(
+            "Passwords do not match."
+        );
+
+
+        confirmPassword.focus();
+
+
+        return false;
+
+
+    }
+
+
+
+
+    // Terms
+
+    if (!agreeTerms.checked) {
+
+
+        showError(
+            "You must agree to the Terms & Conditions."
+        );
+
+
+        agreeTerms.focus();
+
+
+        return false;
+
+
+    }
+
+
+
+
+    return true;
+
+
+}
+
+
+
+// ==========================================================
+// End Part 4
+// ==========================================================
+
+
+// ==========================================================
+// Part 5
+// Logo Upload & Preview
+// ==========================================================
+
+
+// ==========================================================
+// Validate Logo File
+// ==========================================================
+
+function validateLogoFile(file) {
+
+
+    if (!file) {
+
+
+        showError(
+            "Please upload a business logo."
+        );
+
+
+        return false;
+
+
+    }
+
+
+
+    if (
+        !ALLOWED_LOGO_TYPES.includes(
+            file.type
+        )
+    ) {
+
+
+        showError(
+            "Only JPG, PNG and WEBP images are allowed."
+        );
+
+
+        return false;
+
+
+    }
+
+
+
+
+    if (
+        file.size > MAX_LOGO_SIZE
+    ) {
+
+
+        showError(
+            "Logo size must not exceed 2MB."
+        );
+
+
+        return false;
+
+
+    }
+
+
+
+    return true;
+
+
+}
+
+
+
+
+// ==========================================================
+// Preview Logo
+// ==========================================================
+
+function previewLogo(file) {
+
+
+    if (!logoPreview || !file) {
+
+
+        return;
+
+
+    }
+
+
+
+    const reader =
+
+        new FileReader();
+
+
+
+    reader.onload = function(event) {
+
+
+        logoPreview.src =
+
+            event.target.result;
+
+
+
+        logoPreview.classList.remove(
+
+            "d-none"
+
+        );
+
+
+    };
+
+
+
+    reader.readAsDataURL(file);
+
+
+}
+
+
+
+
+// ==========================================================
+// Upload Logo To Firebase Storage
+// ==========================================================
+
+async function uploadSupplierLogo(userId, file) {
+
+
+    if (!validateLogoFile(file)) {
+
+
+        throw new Error(
+
+            "Invalid logo file."
+
+        );
+
+
+    }
+
+
+
+    const logoReference =
+
+        ref(
+
+            storage,
+
+            `suppliers/${userId}/logo/${file.name}`
+
+        );
+
+
+
+    await uploadBytes(
+
+        logoReference,
+
+        file
+
+    );
+
+
+
+    const downloadURL =
+
+        await getDownloadURL(
+
+            logoReference
+
+        );
+
+
+
+    return downloadURL;
+
+
+}
+
+
+
+
+// ==========================================================
+// Logo Change Handler
+// ==========================================================
+
+function handleLogoChange() {
+
+
+    const file =
+
+        businessLogo.files[0];
+
+
+
+    if (!file) {
+
+
+        return;
+
+
+    }
+
+
+
+    clearError();
+
+
+
+    if (
+        validateLogoFile(file)
+    ) {
+
+
+        previewLogo(file);
+
+
+    } else {
+
+
+        businessLogo.value = "";
+
+
+    }
+
+
+}
+
+
+
+// ==========================================================
+// End Part 5
+// ==========================================================
+
+
+// ==========================================================
+// Part 6
+// Firebase Authentication
+// ==========================================================
+
+
+// ==========================================================
+// Create Supplier Authentication Account
+// ==========================================================
+
+async function createSupplierAccount() {
+
+
+    const emailValue =
+
+        email.value.trim();
+
+
+
+    const passwordValue =
+
+        password.value;
+
+
+
+    try {
+
+
+        const userCredential =
+
+            await createUserWithEmailAndPassword(
+
+                auth,
+
+                emailValue,
+
+                passwordValue
+
+            );
+
+
+
+        const user =
+
+            userCredential.user;
+
+
+
+        await sendEmailVerification(
+
+            user
+
+        );
+
+
+
+        return user;
+
+
+
+    } catch (error) {
+
+
+
+        console.error(
+
+            "Supplier authentication error:",
+
+            error
+
+        );
+
+
+
+        throw new Error(
+
+            getAuthErrorMessage(
+
+                error.code
+
+            )
+
+        );
+
+
+    }
+
+
+}
+
+
+
+
+// ==========================================================
+// Firebase Auth Error Messages
+// ==========================================================
+
+function getAuthErrorMessage(errorCode) {
+
+
+    switch (errorCode) {
+
+
+        case "auth/email-already-in-use":
+
+
+            return (
+
+                "This email address is already registered."
+
+            );
+
+
+
+        case "auth/invalid-email":
+
+
+            return (
+
+                "The email address is invalid."
+
+            );
+
+
+
+        case "auth/weak-password":
+
+
+            return (
+
+                "Password is too weak. Use a stronger password."
+
+            );
+
+
+
+        case "auth/network-request-failed":
+
+
+            return (
+
+                "Network error. Check your internet connection."
+
+            );
+
+
+
+        default:
+
+
+            return (
+
+                "Unable to create account. Please try again."
+
+            );
+
+
+    }
+
+
+}
+
+
+
+// ==========================================================
+// End Part 6
+// ==========================================================
+
+
+// ==========================================================
+// Part 7
+// Firestore Supplier Profile Creation
+// ==========================================================
+
+
+// ==========================================================
+// Create Supplier Firestore Profile
+// ==========================================================
+
+async function createSupplierProfile(
+    user,
+    logoURL
+) {
+
+
+    try {
+
+
+        const supplierData = {
+
+
+            // Account Identity
+
+            uid: user.uid,
+
+
+            email: user.email,
+
+
+            accountType: "supplier",
+
+
+
+            // Business Information
+
+            businessName:
+
+                businessName.value.trim(),
+
+
+
+            ownerName:
+
+                ownerName.value.trim(),
+
+
+
+            phone:
+
+                phone.value.trim(),
+
+
+
+            // Location
+
+            county:
+
+                county.value,
+
+
+
+            town:
+
+                town.value,
+
+
+
+            address:
+
+                address.value.trim(),
+
+
+
+            // Verification Information
+
+            licenceNumber:
+
+                licenceNumber.value.trim(),
+
+
+
+            kraPin:
+
+                kraPin.value.trim(),
+
+
+
+            // Logo
+
+            logoURL: logoURL || "",
+
+
+
+            // Account Status
+
+            verified: false,
+
+
+            status: "pending",
+
+
+
+            // Platform Information
+
+            createdAt:
+
+                now(),
+
+
+
+            updatedAt:
+
+                now()
+
+
+        };
+
+
+
+
+        await setDoc(
+
+            doc(
+
+                db,
+
+                "suppliers",
+
+                user.uid
+
+            ),
+
+            supplierData
+
+        );
+
+
+
+        return supplierData;
+
+
+
+    } catch (error) {
+
+
+
+        console.error(
+
+            "Firestore supplier profile error:",
+
+            error
+
+        );
+
+
+
+        throw new Error(
+
+            "Unable to save supplier profile."
+
+        );
+
+
+    }
+
+
+}
+
+
+
+// ==========================================================
+// End Part 7
+// ==========================================================
+
+
+// ==========================================================
+// Part 8
+// Registration Workflow
+// ==========================================================
+
+
+// ==========================================================
+// Handle Supplier Registration
+// ==========================================================
+
+async function handleSupplierRegistration() {
+
+
+    if (isSubmitting) {
+
+
+        return;
+
+
+    }
+
+
+
+
+    if (!validateSupplierForm()) {
+
+
+        return;
+
+
+    }
+
+
+
+
+    try {
+
+
+        setLoading(true);
+
+
+
+        clearError();
+
+
+
+        // ==================================================
+        // Step 1:
+        // Create Firebase Authentication Account
+        // ==================================================
+
+        const user =
+
+            await createSupplierAccount();
+
+
+
+
+        // ==================================================
+        // Step 2:
+        // Upload Business Logo
+        // ==================================================
+
+        const logoFile =
+
+            businessLogo.files[0];
+
+
+
+        logoURL =
+
+            await uploadSupplierLogo(
+
+                user.uid,
+
+                logoFile
+
+            );
+
+
+
+
+
+        // ==================================================
+        // Step 3:
+        // Create Firestore Supplier Profile
+        // ==================================================
+
+        await createSupplierProfile(
+
+            user,
+
+            logoURL
+
+        );
+
+
+
+
+
+        // ==================================================
+        // Success
+        // ==================================================
+
+        alert(
+
+            "Supplier registration successful. Please verify your email."
+
+        );
+
+
+
+        window.location.href =
+
+            "/supplier/login/";
+
+
+
+
+
+    } catch (error) {
+
+
+
+        console.error(
+
+            "Registration workflow error:",
+
+            error
+
+        );
+
+
+
+        showError(
+
+            error.message
+
+        );
+
+
+
+    } finally {
+
+
+
+        setLoading(false);
+
+
+    }
+
+
+}
+
+
+
+// ==========================================================
+// End Part 8
+// ==========================================================
+
+
+// ==========================================================
+// Part 9
+// Initialization & Event Listeners
+// ==========================================================
+
+
+// ==========================================================
+// Initialize Supplier Registration
+// ==========================================================
+
+function initializeSupplierRegistration() {
+
+
+    // Load counties
+
+    loadCounties();
+
+
+
+    // Disable town until county selected
+
+    if (town) {
+
+
+        town.disabled = true;
+
+
+    }
+
+
+}
+
+
+
+// ==========================================================
+// Event Listeners
+// ==========================================================
+
+
+// Form Submit
+
+if (supplierRegisterForm) {
+
+
+    supplierRegisterForm.addEventListener(
+
+        "submit",
+
+        function(event) {
+
+
+            event.preventDefault();
+
+
+            handleSupplierRegistration();
+
+
+        }
+
+    );
+
+
+}
+
+
+
+
+// County Selection
+
+if (county) {
+
+
+    county.addEventListener(
+
+        "change",
+
+        function() {
+
+
+            loadTowns(
+
+                this.value
+
+            );
+
+
+        }
+
+    );
+
+
+}
+
+
+
+
+// Logo Selection
+
+if (businessLogo) {
+
+
+    businessLogo.addEventListener(
+
+        "change",
+
+        function() {
+
+
+            handleLogoChange();
+
+
+        }
+
+    );
+
+
+}
+
+
+
+
+// Password Strength
+
+if (password) {
+
+
+    password.addEventListener(
+
+        "input",
+
+        function() {
+
+
+            updatePasswordStrength(
+
+                this.value
+
+            );
+
+
+        }
+
+    );
+
+
+}
+
+
+
+
+// Clear Error While Typing
+
+const formInputs =
+
+    document.querySelectorAll(
+
+        "#supplierRegisterForm input, #supplierRegisterForm select, #supplierRegisterForm textarea"
+
+    );
+
+
+
+formInputs.forEach(
+
+    (input) => {
+
+
+        input.addEventListener(
+
+            "input",
+
+            function() {
+
+
+                clearError();
+
+
+            }
+
+        );
+
+
+    }
+
+);
+
+
+
+
+// ==========================================================
+// Start Supplier Registration
+// ==========================================================
 
 document.addEventListener(
 
@@ -1121,76 +2010,107 @@ document.addEventListener(
 
     () => {
 
-        document.getElementById(
 
-            "currentYear"
+        initializeSupplierRegistration();
 
-        ).textContent =
-
-        new Date().getFullYear();
-
-        const backToTop =
-
-            document.getElementById(
-
-                "backToTop"
-
-            );
-
-        window.addEventListener(
-
-            "scroll",
-
-            () => {
-
-                if(window.scrollY > 500){
-
-                    backToTop.classList.add(
-
-                        "show"
-
-                    );
-
-                }
-
-                else{
-
-                    backToTop.classList.remove(
-
-                        "show"
-
-                    );
-
-                }
-
-            }
-
-        );
-
-        backToTop.addEventListener(
-
-            "click",
-
-            () => {
-
-                window.scrollTo({
-
-                    top:0,
-
-                    behavior:"smooth"
-
-                });
-
-            }
-
-        );
 
     }
 
 );
 
-</script>
 
-</body>
 
-</html>
+
+// ==========================================================
+// End Part 9
+// ==========================================================
+
+
+// ==========================================================
+// Part 10
+// Final Polish & Exports
+// ==========================================================
+
+
+// ==========================================================
+// Prevent Accidental Double Submission
+// ==========================================================
+
+window.addEventListener(
+
+    "beforeunload",
+
+    () => {
+
+
+        if (isSubmitting) {
+
+
+            isSubmitting = false;
+
+
+        }
+
+
+    }
+
+);
+
+
+
+
+// ==========================================================
+// Global Error Protection
+// ==========================================================
+
+window.addEventListener(
+
+    "error",
+
+    (event) => {
+
+
+        console.error(
+
+            "Supplier registration error:",
+
+            event.error
+
+        );
+
+
+    }
+
+);
+
+
+
+
+// ==========================================================
+// Export Functions
+// ==========================================================
+
+export {
+
+
+    validateSupplierForm,
+
+    loadCounties,
+
+    loadTowns,
+
+    uploadSupplierLogo,
+
+    createSupplierAccount,
+
+    createSupplierProfile,
+
+    handleSupplierRegistration
+
+};
+
+
+
+// ==========================================================
+// Supplier Register JS Complete
+// ==========================================================
