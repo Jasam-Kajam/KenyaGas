@@ -1099,3 +1099,70 @@ gap: 1rem;
 justify-content: flex-end;
 
 }
+
+
+/* ======================================================
+   PRODUCTS PAGE
+   Header Consistency
+====================================================== */
+
+.site-header{
+    width:100%;
+}
+
+.navbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+}
+
+.logo img{
+    display:block;
+}
+
+/* Mobile Toggle - Same Appearance as Homepage */
+
+#menuToggle,
+.menu-toggle{
+    display:none;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+}
+
+/* Mobile */
+
+@media (max-width:768px){
+
+    #menuToggle,
+    .menu-toggle{
+
+        display:flex;
+
+        width:44px;
+
+        height:44px;
+
+        margin-left:auto;
+
+        align-items:center;
+
+        justify-content:center;
+
+    }
+
+    #menuToggle i,
+    .menu-toggle i{
+
+        font-size:1.5rem;
+
+        line-height:1;
+
+    }
+
+}
