@@ -48,9 +48,50 @@ import {
 
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-storage.js";
 
+
+import {
+    kenyaCounties,
+    getTowns
+} from "./counties.js";
+
 // ==========================================================
 // DOM Elements
 // ==========================================================
+const countySelect = document.getElementById("county");
+const townSelect = document.getElementById("town");
+
+// Load counties
+kenyaCounties.forEach(county => {
+
+    const option = document.createElement("option");
+
+    option.value = county;
+    option.textContent = county;
+
+    countySelect.appendChild(option);
+
+});
+
+// Load towns when county changes
+countySelect.addEventListener("change", () => {
+
+    townSelect.innerHTML =
+        '<option value="">Select Town</option>';
+
+    const towns = getTowns(countySelect.value);
+
+    towns.forEach(town => {
+
+        const option = document.createElement("option");
+
+        option.value = town;
+        option.textContent = town;
+
+        townSelect.appendChild(option);
+
+    });
+
+});
 
 const supplierForm =
     document.getElementById("supplierRegisterForm");
