@@ -1,0 +1,1876 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<!-- ======================================================
+     Kenya Gas Marketplace
+     File: supplier/dashboard/index.html
+     Version: 1.0.0
+     Supplier Dashboard
+====================================================== -->
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<meta http-equiv="X-UA-Compatible"
+      content="IE=edge">
+
+<!-- ======================================================
+SEO
+====================================================== -->
+
+<title>
+
+Supplier Dashboard | Kenya Gas Marketplace
+
+</title>
+
+<meta name="description"
+      content="Manage your LPG products, orders, customers and business performance from your supplier dashboard.">
+
+<meta name="keywords"
+      content="Kenya Gas Marketplace, Supplier Dashboard, LPG Supplier, Orders, Products">
+
+<meta name="author"
+      content="Kenya Gas Marketplace">
+
+<meta name="robots"
+      content="noindex,nofollow">
+
+<!-- ======================================================
+Open Graph
+====================================================== -->
+
+<meta property="og:type"
+      content="website">
+
+<meta property="og:title"
+      content="Supplier Dashboard">
+
+<meta property="og:description"
+      content="Manage your supplier account.">
+
+<meta property="og:image"
+      content="/assets/images/og-image.jpg">
+
+<!-- ======================================================
+Fonts
+====================================================== -->
+
+<link rel="preconnect"
+      href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet">
+
+<!-- ======================================================
+Icons
+====================================================== -->
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+<!-- ======================================================
+Global CSS
+====================================================== -->
+
+<link rel="stylesheet"
+      href="/assets/css/variables.css">
+
+<link rel="stylesheet"
+      href="/assets/css/utilities.css">
+
+<link rel="stylesheet"
+      href="/assets/css/components.css">
+
+<link rel="stylesheet"
+      href="/assets/css/app.css">
+
+<link rel="stylesheet"
+      href="/assets/css/responsive.css">
+
+</head>
+
+<body>
+
+<!-- ======================================================
+Page Loader
+====================================================== -->
+
+<div id="pageLoader"
+     class="page-loader">
+
+    <div class="loader-spinner"></div>
+
+</div>
+
+<!-- ======================================================
+Header
+====================================================== -->
+
+<header class="site-header">
+
+<nav class="navbar">
+
+<a href="/"
+   class="logo">
+
+<img src="/assets/images/favicon.png"
+     alt="Kenya Gas Marketplace">
+
+</a>
+
+<button id="menuToggle"
+        class="menu-toggle"
+        aria-label="Toggle Navigation">
+
+<i class="fas fa-bars"></i>
+
+</button>
+
+<ul class="nav-links">
+
+<li>
+
+<a href="/">
+
+Home
+
+</a>
+
+</li>
+
+<li>
+
+<a href="/products/">
+
+Products
+
+</a>
+
+</li>
+
+<li>
+
+<a href="/suppliers/">
+
+Suppliers
+
+</a>
+
+</li>
+
+<li>
+
+<a href="/about/">
+
+About
+
+</a>
+
+</li>
+
+<li>
+
+<a href="/contact/">
+
+Contact
+
+</a>
+
+</li>
+
+</ul>
+
+<div class="nav-actions">
+
+<a href="/wishlist/"
+   class="nav-icon">
+
+<i class="far fa-heart"></i>
+
+</a>
+
+<a href="/cart/"
+   class="nav-icon">
+
+<i class="fas fa-shopping-cart"></i>
+
+<span id="cartCount"
+      class="cart-badge">
+
+0
+
+</span>
+
+</a>
+
+<div class="user-dropdown">
+
+<button id="userMenuButton"
+        class="user-button">
+
+<img id="supplierAvatar"
+     src="/assets/images/avatar.png"
+     alt="Supplier">
+
+<span id="supplierName">
+
+Supplier
+
+</span>
+
+<i class="fas fa-chevron-down"></i>
+
+</button>
+
+<div id="userDropdownMenu"
+     class="dropdown-menu">
+
+<a href="/supplier/profile/">
+
+<i class="fas fa-user"></i>
+
+Profile
+
+</a>
+
+<a href="/supplier/settings/">
+
+<i class="fas fa-cog"></i>
+
+Settings
+
+</a>
+
+<a href="#"
+   id="logoutButton">
+
+<i class="fas fa-sign-out-alt"></i>
+
+Logout
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</nav>
+
+</header>
+
+<!-- ======================================================
+Dashboard Layout
+====================================================== -->
+
+<main class="dashboard-page">
+
+<div class="container">
+
+<div class="dashboard-layout">
+
+<!-- ======================================================
+Sidebar
+====================================================== -->
+
+<aside class="dashboard-sidebar">
+
+<div class="sidebar-header">
+
+<img id="sidebarLogo"
+     src="/assets/images/avatar.png"
+     alt="Supplier Logo">
+
+<h2 id="sidebarBusinessName">
+
+Business Name
+
+</h2>
+
+<p id="supplierStatus">
+
+Pending Verification
+
+</p>
+
+</div>
+
+<nav class="dashboard-nav">
+
+<a href="/supplier/dashboard/"
+   class="active">
+
+<i class="fas fa-chart-line"></i>
+
+Dashboard
+
+</a>
+
+<a href="/supplier/orders/">
+
+<i class="fas fa-shopping-bag"></i>
+
+Orders
+
+</a>
+
+<a href="/supplier/products/">
+
+<i class="fas fa-gas-pump"></i>
+
+Products
+
+</a>
+
+<a href="/supplier/customers/">
+
+<i class="fas fa-users"></i>
+
+Customers
+
+</a>
+
+<a href="/supplier/analytics/">
+
+<i class="fas fa-chart-pie"></i>
+
+Analytics
+
+</a>
+
+<a href="/supplier/notifications/">
+
+<i class="fas fa-bell"></i>
+
+Notifications
+
+</a>
+
+<a href="/supplier/profile/">
+
+<i class="fas fa-user-circle"></i>
+
+Business Profile
+
+</a>
+
+<a href="/supplier/settings/">
+
+<i class="fas fa-cog"></i>
+
+Settings
+
+</a>
+
+</nav>
+
+</aside>
+
+<!-- ======================================================
+Dashboard Content
+====================================================== -->
+
+<section class="dashboard-content">
+
+<div class="dashboard-header">
+
+<div>
+
+<h1>
+
+Supplier Dashboard
+
+</h1>
+
+<p>
+
+Welcome back,
+
+<span id="welcomeName">
+
+Supplier
+
+</span>
+
+</p>
+
+</div>
+
+<div class="dashboard-actions">
+
+<button id="refreshDashboard"
+        class="btn btn-outline">
+
+<i class="fas fa-rotate"></i>
+
+Refresh
+
+</button>
+
+<a href="/supplier/products/add/"
+   class="btn btn-primary">
+
+<i class="fas fa-plus"></i>
+
+Add Product
+
+</a>
+
+</div>
+
+</div>
+
+  <!-- ======================================================
+Dashboard Welcome
+====================================================== -->
+
+<section class="dashboard-header">
+
+    <div class="container">
+
+        <div class="dashboard-header-content">
+
+            <div class="dashboard-user">
+
+                <img
+                    id="supplierAvatar"
+                    src="/assets/images/avatar.png"
+                    alt="Supplier Profile"
+                    class="dashboard-avatar">
+
+                <div>
+
+                    <h1>
+
+                        Welcome,
+
+                        <span id="supplierBusinessName">
+
+                            Loading...
+
+                        </span>
+
+                    </h1>
+
+                    <p>
+
+                        Manage your products, orders and customers from one place.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="dashboard-actions">
+
+                <a
+                    href="/supplier/product-form/"
+                    class="btn btn-primary">
+
+                    <i class="fas fa-plus-circle"></i>
+
+                    Add Product
+
+                </a>
+
+                <a
+                    href="/supplier/orders/"
+                    class="btn btn-outline">
+
+                    <i class="fas fa-shopping-bag"></i>
+
+                    View Orders
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ======================================================
+Dashboard Statistics
+====================================================== -->
+
+<section class="dashboard-stats">
+
+    <div class="container">
+
+        <div class="stats-grid">
+
+            <!-- Products -->
+
+            <article class="stat-card">
+
+                <div class="stat-icon">
+
+                    <i class="fas fa-gas-pump"></i>
+
+                </div>
+
+                <div class="stat-content">
+
+                    <h3 id="totalProducts">
+
+                        0
+
+                    </h3>
+
+                    <p>
+
+                        Products
+
+                    </p>
+
+                </div>
+
+            </article>
+
+            <!-- Orders -->
+
+            <article class="stat-card">
+
+                <div class="stat-icon">
+
+                    <i class="fas fa-shopping-cart"></i>
+
+                </div>
+
+                <div class="stat-content">
+
+                    <h3 id="totalOrders">
+
+                        0
+
+                    </h3>
+
+                    <p>
+
+                        Orders
+
+                    </p>
+
+                </div>
+
+            </article>
+
+            <!-- Revenue -->
+
+            <article class="stat-card">
+
+                <div class="stat-icon">
+
+                    <i class="fas fa-wallet"></i>
+
+                </div>
+
+                <div class="stat-content">
+
+                    <h3 id="totalRevenue">
+
+                        KES 0
+
+                    </h3>
+
+                    <p>
+
+                        Revenue
+
+                    </p>
+
+                </div>
+
+            </article>
+
+            <!-- Customers -->
+
+            <article class="stat-card">
+
+                <div class="stat-icon">
+
+                    <i class="fas fa-users"></i>
+
+                </div>
+
+                <div class="stat-content">
+
+                    <h3 id="totalCustomers">
+
+                        0
+
+                    </h3>
+
+                    <p>
+
+                        Customers
+
+                    </p>
+
+                </div>
+
+            </article>
+
+            <!-- Rating -->
+
+            <article class="stat-card">
+
+                <div class="stat-icon">
+
+                    <i class="fas fa-star"></i>
+
+                </div>
+
+                <div class="stat-content">
+
+                    <h3 id="supplierRating">
+
+                        0.0
+
+                    </h3>
+
+                    <p>
+
+                        Rating
+
+                    </p>
+
+                </div>
+
+            </article>
+
+            <!-- Pending Orders -->
+
+            <article class="stat-card">
+
+                <div class="stat-icon">
+
+                    <i class="fas fa-clock"></i>
+
+                </div>
+
+                <div class="stat-content">
+
+                    <h3 id="pendingOrders">
+
+                        0
+
+                    </h3>
+
+                    <p>
+
+                        Pending Orders
+
+                    </p>
+
+                </div>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+  <!-- ======================================================
+Dashboard Content
+====================================================== -->
+
+<main class="dashboard-main">
+
+    <div class="container">
+
+        <!-- ==========================================
+             Welcome Banner
+        =========================================== -->
+
+        <section class="dashboard-banner">
+
+            <div class="banner-content">
+
+                <h1>
+
+                    Welcome Back,
+                    <span id="supplierName">
+
+                        Supplier
+
+                    </span>
+
+                </h1>
+
+                <p>
+
+                    Manage your products, monitor customer orders,
+                    track revenue and grow your LPG business from one
+                    dashboard.
+
+                </p>
+
+            </div>
+
+            <div class="banner-actions">
+
+                <a href="/supplier/products/new/"
+                   class="btn btn-primary">
+
+                    <i class="fas fa-plus-circle"></i>
+
+                    Add Product
+
+                </a>
+
+            </div>
+
+        </section>
+
+        <!-- ==========================================
+             Dashboard Statistics
+        =========================================== -->
+
+        <section class="dashboard-stats">
+
+            <article class="stat-card">
+
+                <div class="stat-icon">
+
+                    <i class="fas fa-box"></i>
+
+                </div>
+
+                <div class="stat-info">
+
+                    <h3 id="totalProducts">
+
+                        0
+
+                    </h3>
+
+                    <p>
+
+                        Products
+
+                    </p>
+
+                </div>
+
+            </article>
+
+            <article class="stat-card">
+
+                <div class="stat-icon">
+
+                    <i class="fas fa-shopping-cart"></i>
+
+                </div>
+
+                <div class="stat-info">
+
+                    <h3 id="totalOrders">
+
+                        0
+
+                    </h3>
+
+                    <p>
+
+                        Orders
+
+                    </p>
+
+                </div>
+
+            </article>
+
+            <article class="stat-card">
+
+                <div class="stat-icon">
+
+                    <i class="fas fa-wallet"></i>
+
+                </div>
+
+                <div class="stat-info">
+
+                    <h3 id="totalRevenue">
+
+                        KES 0
+
+                    </h3>
+
+                    <p>
+
+                        Revenue
+
+                    </p>
+
+                </div>
+
+            </article>
+
+            <article class="stat-card">
+
+                <div class="stat-icon">
+
+                    <i class="fas fa-star"></i>
+
+                </div>
+
+                <div class="stat-info">
+
+                    <h3 id="supplierRating">
+
+                        0.0
+
+                    </h3>
+
+                    <p>
+
+                        Rating
+
+                    </p>
+
+                </div>
+
+            </article>
+
+        </section>
+
+        <!-- ==========================================
+             Dashboard Grid
+        =========================================== -->
+
+        <div class="dashboard-grid">
+
+            <!-- ======================================
+                 Recent Orders
+            ======================================= -->
+
+            <section class="dashboard-card">
+
+                <div class="card-header">
+
+                    <h2>
+
+                        Recent Orders
+
+                    </h2>
+
+                    <a href="/supplier/orders/">
+
+                        View All
+
+                    </a>
+
+                </div>
+
+                <div class="table-responsive">
+
+                    <table class="dashboard-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+
+                                    Order
+
+                                </th>
+
+                                <th>
+
+                                    Customer
+
+                                </th>
+
+                                <th>
+
+                                    Amount
+
+                                </th>
+
+                                <th>
+
+                                    Status
+
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="recentOrders">
+
+                            <!-- supplier-dashboard.js -->
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+            <!-- ======================================
+                 Top Products
+            ======================================= -->
+
+            <section class="dashboard-card">
+
+                <div class="card-header">
+
+                    <h2>
+
+                        Top Products
+
+                    </h2>
+
+                    <a href="/supplier/products/">
+
+                        Manage
+
+                    </a>
+
+                </div>
+
+                <div id="topProducts">
+
+                    <!-- supplier-dashboard.js -->
+
+                </div>
+
+            </section>
+
+        </div>
+
+      <!-- ======================================================
+Dashboard Statistics
+====================================================== -->
+
+<section class="dashboard-overview">
+
+    <div class="stats-grid">
+
+        <!-- Total Products -->
+
+        <article class="stat-card">
+
+            <div class="stat-icon">
+
+                <i class="fas fa-gas-pump"></i>
+
+            </div>
+
+            <div class="stat-content">
+
+                <span class="stat-label">
+
+                    Total Products
+
+                </span>
+
+                <h2 id="totalProducts">
+
+                    0
+
+                </h2>
+
+                <small>
+
+                    Active LPG listings
+
+                </small>
+
+            </div>
+
+        </article>
+
+        <!-- Total Orders -->
+
+        <article class="stat-card">
+
+            <div class="stat-icon">
+
+                <i class="fas fa-shopping-cart"></i>
+
+            </div>
+
+            <div class="stat-content">
+
+                <span class="stat-label">
+
+                    Orders
+
+                </span>
+
+                <h2 id="totalOrders">
+
+                    0
+
+                </h2>
+
+                <small>
+
+                    All customer orders
+
+                </small>
+
+            </div>
+
+        </article>
+
+        <!-- Pending Orders -->
+
+        <article class="stat-card">
+
+            <div class="stat-icon">
+
+                <i class="fas fa-clock"></i>
+
+            </div>
+
+            <div class="stat-content">
+
+                <span class="stat-label">
+
+                    Pending
+
+                </span>
+
+                <h2 id="pendingOrders">
+
+                    0
+
+                </h2>
+
+                <small>
+
+                    Awaiting processing
+
+                </small>
+
+            </div>
+
+        </article>
+
+        <!-- Revenue -->
+
+        <article class="stat-card">
+
+            <div class="stat-icon">
+
+                <i class="fas fa-coins"></i>
+
+            </div>
+
+            <div class="stat-content">
+
+                <span class="stat-label">
+
+                    Revenue
+
+                </span>
+
+                <h2 id="totalRevenue">
+
+                    KES 0
+
+                </h2>
+
+                <small>
+
+                    Lifetime earnings
+
+                </small>
+
+            </div>
+
+        </article>
+
+    </div>
+
+</section>
+
+<!-- ======================================================
+Quick Actions
+====================================================== -->
+
+<section class="quick-actions">
+
+    <div class="section-header">
+
+        <h2>
+
+            Quick Actions
+
+        </h2>
+
+    </div>
+
+    <div class="action-grid">
+
+        <a href="/supplier/products/add/"
+           class="action-card">
+
+            <i class="fas fa-plus-circle"></i>
+
+            <span>
+
+                Add Product
+
+            </span>
+
+        </a>
+
+        <a href="/supplier/orders/"
+           class="action-card">
+
+            <i class="fas fa-box-open"></i>
+
+            <span>
+
+                View Orders
+
+            </span>
+
+        </a>
+
+        <a href="/supplier/profile/"
+           class="action-card">
+
+            <i class="fas fa-store"></i>
+
+            <span>
+
+                Business Profile
+
+            </span>
+
+        </a>
+
+        <a href="/supplier/settings/"
+           class="action-card">
+
+            <i class="fas fa-cog"></i>
+
+            <span>
+
+                Settings
+
+            </span>
+
+        </a>
+
+    </div>
+
+</section>
+
+<!-- ======================================================
+Recent Orders
+====================================================== -->
+
+<section class="dashboard-section">
+
+    <div class="section-header">
+
+        <h2>
+
+            Recent Orders
+
+        </h2>
+
+        <a href="/supplier/orders/"
+           class="btn btn-outline">
+
+            View All
+
+        </a>
+
+    </div>
+
+    <div class="table-wrapper">
+
+        <table class="dashboard-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>Order ID</th>
+
+                    <th>Customer</th>
+
+                    <th>Product</th>
+
+                    <th>Status</th>
+
+                    <th>Total</th>
+
+                    <th>Date</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="recentOrdersTable">
+
+                <!-- supplier-dashboard.js -->
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+<!-- ======================================================
+Low Stock Products
+====================================================== -->
+
+<section class="dashboard-section">
+
+    <div class="section-header">
+
+        <h2>
+
+            Low Stock Products
+
+        </h2>
+
+        <a href="/supplier/products/"
+           class="btn btn-outline">
+
+            Manage Products
+
+        </a>
+
+    </div>
+
+    <div id="lowStockProducts"
+         class="dashboard-list">
+
+        <!-- supplier-dashboard.js -->
+
+    </div>
+
+</section>
+
+<!-- ======================================================
+Recent Notifications
+====================================================== -->
+
+<section class="dashboard-section">
+
+    <div class="section-header">
+
+        <h2>
+
+            Notifications
+
+        </h2>
+
+        <a href="/supplier/notifications/"
+           class="btn btn-outline">
+
+            View All
+
+        </a>
+
+    </div>
+
+    <div id="dashboardNotifications"
+         class="notification-list">
+
+        <!-- supplier-dashboard.js -->
+
+    </div>
+
+</section>
+
+              <!-- ==========================================
+             Dashboard Overview
+        =========================================== -->
+
+        <section class="dashboard-overview">
+
+            <div class="section-header">
+
+                <div>
+
+                    <h2>
+
+                        Dashboard Overview
+
+                    </h2>
+
+                    <p>
+
+                        Monitor your LPG business performance in real time.
+
+                    </p>
+
+                </div>
+
+                <button
+                        id="refreshDashboard"
+                        class="btn btn-outline">
+
+                    <i class="fas fa-rotate-right"></i>
+
+                    Refresh
+
+                </button>
+
+            </div>
+
+            <!-- Statistics Cards -->
+
+            <div class="stats-grid">
+
+                <article class="stat-card">
+
+                    <div class="stat-icon">
+
+                        <i class="fas fa-shopping-cart"></i>
+
+                    </div>
+
+                    <div class="stat-details">
+
+                        <h3 id="totalOrders">
+
+                            0
+
+                        </h3>
+
+                        <p>
+
+                            Total Orders
+
+                        </p>
+
+                    </div>
+
+                </article>
+
+                <article class="stat-card">
+
+                    <div class="stat-icon">
+
+                        <i class="fas fa-hourglass-half"></i>
+
+                    </div>
+
+                    <div class="stat-details">
+
+                        <h3 id="pendingOrders">
+
+                            0
+
+                        </h3>
+
+                        <p>
+
+                            Pending Orders
+
+                        </p>
+
+                    </div>
+
+                </article>
+
+                <article class="stat-card">
+
+                    <div class="stat-icon">
+
+                        <i class="fas fa-gas-pump"></i>
+
+                    </div>
+
+                    <div class="stat-details">
+
+                        <h3 id="totalProducts">
+
+                            0
+
+                        </h3>
+
+                        <p>
+
+                            Active Products
+
+                        </p>
+
+                    </div>
+
+                </article>
+
+                <article class="stat-card">
+
+                    <div class="stat-icon">
+
+                        <i class="fas fa-wallet"></i>
+
+                    </div>
+
+                    <div class="stat-details">
+
+                        <h3 id="totalRevenue">
+
+                            KES 0
+
+                        </h3>
+
+                        <p>
+
+                            Revenue
+
+                        </p>
+
+                    </div>
+
+                </article>
+
+                <article class="stat-card">
+
+                    <div class="stat-icon">
+
+                        <i class="fas fa-star"></i>
+
+                    </div>
+
+                    <div class="stat-details">
+
+                        <h3 id="supplierRating">
+
+                            0.0
+
+                        </h3>
+
+                        <p>
+
+                            Average Rating
+
+                        </p>
+
+                    </div>
+
+                </article>
+
+                <article class="stat-card">
+
+                    <div class="stat-icon">
+
+                        <i class="fas fa-users"></i>
+
+                    </div>
+
+                    <div class="stat-details">
+
+                        <h3 id="totalCustomers">
+
+                            0
+
+                        </h3>
+
+                        <p>
+
+                            Customers
+
+                        </p>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+        <!-- ==========================================
+             Recent Orders
+        =========================================== -->
+
+        <section class="dashboard-section">
+
+            <div class="section-header">
+
+                <h2>
+
+                    Recent Orders
+
+                </h2>
+
+                <a href="/supplier/orders/"
+                   class="btn btn-outline">
+
+                    View All
+
+                </a>
+
+            </div>
+
+            <div class="table-responsive">
+
+                <table class="dashboard-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Order ID</th>
+
+                            <th>Customer</th>
+
+                            <th>Product</th>
+
+                            <th>Amount</th>
+
+                            <th>Status</th>
+
+                            <th>Date</th>
+
+                            <th>Action</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="recentOrdersTable">
+
+                        <!-- supplier-dashboard.js renders here -->
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+      <!-- ======================================================
+Dashboard Navigation
+====================================================== -->
+
+<nav class="dashboard-nav">
+
+    <ul>
+
+        <li>
+
+            <a href="/supplier/dashboard/"
+               class="active">
+
+                <i class="fas fa-gauge-high"></i>
+
+                <span>Dashboard</span>
+
+            </a>
+
+        </li>
+
+        <li>
+
+            <a href="/supplier/orders/">
+
+                <i class="fas fa-box"></i>
+
+                <span>Orders</span>
+
+                <span id="pendingOrdersBadge"
+                      class="nav-badge">
+
+                    0
+
+                </span>
+
+            </a>
+
+        </li>
+
+        <li>
+
+            <a href="/supplier/products/">
+
+                <i class="fas fa-gas-pump"></i>
+
+                <span>Products</span>
+
+            </a>
+
+        </li>
+
+        <li>
+
+            <a href="/supplier/customers/">
+
+                <i class="fas fa-users"></i>
+
+                <span>Customers</span>
+
+            </a>
+
+        </li>
+
+        <li>
+
+            <a href="/supplier/analytics/">
+
+                <i class="fas fa-chart-line"></i>
+
+                <span>Analytics</span>
+
+            </a>
+
+        </li>
+
+        <li>
+
+            <a href="/supplier/notifications/">
+
+                <i class="fas fa-bell"></i>
+
+                <span>Notifications</span>
+
+                <span id="notificationBadge"
+                      class="nav-badge">
+
+                    0
+
+                </span>
+
+            </a>
+
+        </li>
+
+        <li>
+
+            <a href="/supplier/profile/">
+
+                <i class="fas fa-store"></i>
+
+                <span>Business Profile</span>
+
+            </a>
+
+        </li>
+
+        <li>
+
+            <a href="/supplier/settings/">
+
+                <i class="fas fa-gear"></i>
+
+                <span>Settings</span>
+
+            </a>
+
+        </li>
+
+    </ul>
+
+</nav>
+
+<!-- ======================================================
+Sidebar Footer
+====================================================== -->
+
+<div class="sidebar-footer">
+
+    <a href="/"
+       class="btn btn-outline">
+
+        <i class="fas fa-globe"></i>
+
+        View Marketplace
+
+    </a>
+
+    <button id="supplierLogout"
+            class="btn btn-primary">
+
+        <i class="fas fa-right-from-bracket"></i>
+
+        Logout
+
+    </button>
+
+</div>
+
+</aside>
+
+<!-- ======================================================
+Dashboard Main Content Starts Here
+====================================================== -->
+
+<main class="dashboard-main">
+  <!-- ======================================================
+Firebase
+====================================================== -->
+
+<script type="module"
+        src="/assets/js/firebase.js"></script>
+
+<!-- ======================================================
+Authentication
+====================================================== -->
+
+<script type="module"
+        src="/assets/js/auth.js"></script>
+
+<!-- ======================================================
+Supplier Dashboard Controller
+====================================================== -->
+
+<script type="module"
+        src="/assets/js/supplier-dashboard.js"></script>
+
+<!-- ======================================================
+Page Initialization
+====================================================== -->
+
+<script>
+
+document.addEventListener(
+
+    "DOMContentLoaded",
+
+    () => {
+
+        // ---------------------------------------
+        // Dynamic Copyright Year
+        // ---------------------------------------
+
+        const year =
+
+            document.getElementById(
+
+                "currentYear"
+
+            );
+
+        if (year) {
+
+            year.textContent =
+
+                new Date().getFullYear();
+
+        }
+
+        // ---------------------------------------
+        // Hide Loader
+        // ---------------------------------------
+
+        window.addEventListener(
+
+            "load",
+
+            () => {
+
+                document
+
+                    .getElementById(
+
+                        "pageLoader"
+
+                    )
+
+                    ?.classList.add(
+
+                        "hidden"
+
+                    );
+
+            }
+
+        );
+
+        // ---------------------------------------
+        // Back To Top
+        // ---------------------------------------
+
+        const backToTop =
+
+            document.getElementById(
+
+                "backToTop"
+
+            );
+
+        window.addEventListener(
+
+            "scroll",
+
+            () => {
+
+                if (
+
+                    window.scrollY > 500
+
+                ) {
+
+                    backToTop?.classList.add(
+
+                        "show"
+
+                    );
+
+                }
+
+                else {
+
+                    backToTop?.classList.remove(
+
+                        "show"
+
+                    );
+
+                }
+
+            }
+
+        );
+
+        backToTop?.addEventListener(
+
+            "click",
+
+            () => {
+
+                window.scrollTo({
+
+                    top: 0,
+
+                    behavior: "smooth"
+
+                });
+
+            }
+
+        );
+
+    }
+
+);
+
+</script>
+
+</body>
+
+</html>
