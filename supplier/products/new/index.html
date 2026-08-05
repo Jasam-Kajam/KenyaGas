@@ -1,0 +1,1524 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<!-- ======================================================
+     Kenya Gas Marketplace
+     File: supplier/products/new/index.html
+     Version: 1.0.0
+     Supplier Product Registration
+====================================================== -->
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<meta http-equiv="X-UA-Compatible"
+      content="IE=edge">
+
+<!-- ======================================================
+SEO
+====================================================== -->
+
+<title>
+
+Add New LPG Product | Kenya Gas Marketplace
+
+</title>
+
+<meta name="description"
+      content="Add a new LPG gas cylinder product to your supplier store on Kenya Gas Marketplace.">
+
+<meta name="keywords"
+      content="LPG, Supplier, Gas Cylinder, Kenya Gas Marketplace, Add Product">
+
+<meta name="author"
+      content="Kenya Gas Marketplace">
+
+<meta name="robots"
+      content="noindex,nofollow">
+
+<!-- ======================================================
+Open Graph
+====================================================== -->
+
+<meta property="og:type"
+      content="website">
+
+<meta property="og:title"
+      content="Supplier Product Registration">
+
+<meta property="og:description"
+      content="Add LPG products for customers across Kenya.">
+
+<meta property="og:image"
+      content="/assets/images/og-image.jpg">
+
+<!-- ======================================================
+Fonts
+====================================================== -->
+
+<link rel="preconnect"
+      href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet">
+
+<!-- ======================================================
+Font Awesome
+====================================================== -->
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+<!-- ======================================================
+Global Styles
+====================================================== -->
+
+<link rel="stylesheet"
+      href="/assets/css/variables.css">
+
+<link rel="stylesheet"
+      href="/assets/css/utilities.css">
+
+<link rel="stylesheet"
+      href="/assets/css/components.css">
+
+<link rel="stylesheet"
+      href="/assets/css/app.css">
+
+<link rel="stylesheet"
+      href="/assets/css/responsive.css">
+
+</head>
+
+<body>
+
+<!-- ======================================================
+Page Loader
+====================================================== -->
+
+<div id="pageLoader"
+     class="page-loader">
+
+    <div class="loader-spinner"></div>
+
+</div>
+
+<!-- ======================================================
+Header
+====================================================== -->
+
+<header class="site-header">
+
+    <nav class="navbar">
+
+        <a href="/"
+           class="logo">
+
+            <img src="/assets/images/favicon.png"
+                 alt="Kenya Gas Marketplace">
+
+        </a>
+
+        <button id="menuToggle"
+                class="menu-toggle"
+                aria-label="Toggle Navigation">
+
+            <i class="fas fa-bars"></i>
+
+        </button>
+
+        <ul class="nav-links">
+
+            <li>
+
+                <a href="/supplier/dashboard/">
+
+                    Dashboard
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="/supplier/orders/">
+
+                    Orders
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="/supplier/products/"
+                   class="active">
+
+                    Products
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="/supplier/profile/">
+
+                    Profile
+
+                </a>
+
+            </li>
+
+        </ul>
+
+        <div class="nav-actions">
+
+            <a href="/supplier/notifications/"
+               class="nav-icon">
+
+                <i class="far fa-bell"></i>
+
+            </a>
+
+            <a href="/supplier/settings/"
+               class="nav-icon">
+
+                <i class="fas fa-cog"></i>
+
+            </a>
+
+        </div>
+
+    </nav>
+
+</header>
+
+<!-- ======================================================
+Page Hero
+====================================================== -->
+
+<section class="page-hero">
+
+    <div class="container">
+
+        <nav class="breadcrumb">
+
+            <a href="/supplier/dashboard/">
+
+                Dashboard
+
+            </a>
+
+            <span>/</span>
+
+            <a href="/supplier/products/">
+
+                Products
+
+            </a>
+
+            <span>/</span>
+
+            <span>
+
+                Add Product
+
+            </span>
+
+        </nav>
+
+        <h1>
+
+            Add New LPG Product
+
+        </h1>
+
+        <p>
+
+            Create a new LPG cylinder listing that customers across Kenya can discover and order.
+
+        </p>
+
+    </div>
+
+</section>
+
+  <!-- ======================================================
+Main Content
+====================================================== -->
+
+<main class="supplier-page">
+
+    <div class="container">
+
+        <section class="supplier-form-section">
+
+            <form id="productForm"
+                  class="supplier-form"
+                  enctype="multipart/form-data"
+                  novalidate>
+
+                <!-- ======================================
+                     Error Message
+                ======================================= -->
+
+                <div id="formError"
+                     class="alert alert-danger d-none">
+
+                </div>
+
+                <!-- ======================================
+                     Success Message
+                ======================================= -->
+
+                <div id="formSuccess"
+                     class="alert alert-success d-none">
+
+                </div>
+
+                <!-- ======================================
+                     Basic Information
+                ======================================= -->
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <h2>
+
+                            Basic Information
+
+                        </h2>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <!-- Product Name -->
+
+                        <div class="form-group">
+
+                            <label for="productName">
+
+                                Product Name
+
+                            </label>
+
+                            <input
+
+                                type="text"
+
+                                id="productName"
+
+                                name="productName"
+
+                                placeholder="e.g. Rubis LPG 13 Kg"
+
+                                required>
+
+                        </div>
+
+                        <!-- Brand -->
+
+                        <div class="form-group">
+
+                            <label for="brand">
+
+                                Brand
+
+                            </label>
+
+                            <select
+
+                                id="brand"
+
+                                name="brand"
+
+                                required>
+
+                                <option value="">
+
+                                    Select Brand
+
+                                </option>
+
+                                <option value="Rubis">
+
+                                    Rubis
+
+                                </option>
+
+                                <option value="TotalEnergies">
+
+                                    TotalEnergies
+
+                                </option>
+
+                                <option value="Hashi Gas">
+
+                                    Hashi Gas
+
+                                </option>
+
+                                <option value="Pro Gas">
+
+                                    Pro Gas
+
+                                </option>
+
+                                <option value="K-Gas">
+
+                                    K-Gas
+
+                                </option>
+
+                                <option value="Shell Gas">
+
+                                    Shell Gas
+
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <!-- Cylinder Size -->
+
+                        <div class="form-group">
+
+                            <label for="cylinderSize">
+
+                                Cylinder Size
+
+                            </label>
+
+                            <select
+
+                                id="cylinderSize"
+
+                                name="cylinderSize"
+
+                                required>
+
+                                <option value="">
+
+                                    Select Size
+
+                                </option>
+
+                                <option value="3">
+
+                                    3 Kg
+
+                                </option>
+
+                                <option value="6">
+
+                                    6 Kg
+
+                                </option>
+
+                                <option value="13">
+
+                                    13 Kg
+
+                                </option>
+
+                                <option value="22.5">
+
+                                    22.5 Kg
+
+                                </option>
+
+                                <option value="50">
+
+                                    50 Kg
+
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <!-- Product Category -->
+
+                        <div class="form-group">
+
+                            <label for="category">
+
+                                Category
+
+                            </label>
+
+                            <select
+
+                                id="category"
+
+                                name="category"
+
+                                required>
+
+                                <option value="">
+
+                                    Select Category
+
+                                </option>
+
+                                <option value="Refill">
+
+                                    Gas Refill
+
+                                </option>
+
+                                <option value="Cylinder">
+
+                                    Filled Cylinder
+
+                                </option>
+
+                                <option value="Empty Cylinder">
+
+                                    Empty Cylinder
+
+                                </option>
+
+                                <option value="Accessory">
+
+                                    LPG Accessory
+
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                              <!-- ======================================
+                     Pricing & Inventory
+                ======================================= -->
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <h2>
+
+                            Pricing & Inventory
+
+                        </h2>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="form-row">
+
+                            <!-- Selling Price -->
+
+                            <div class="form-group">
+
+                                <label for="price">
+
+                                    Selling Price (KES)
+
+                                </label>
+
+                                <input
+
+                                    type="number"
+
+                                    id="price"
+
+                                    name="price"
+
+                                    min="0"
+
+                                    step="1"
+
+                                    placeholder="e.g. 1350"
+
+                                    required>
+
+                            </div>
+
+                            <!-- Previous Price -->
+
+                            <div class="form-group">
+
+                                <label for="oldPrice">
+
+                                    Previous Price (Optional)
+
+                                </label>
+
+                                <input
+
+                                    type="number"
+
+                                    id="oldPrice"
+
+                                    name="oldPrice"
+
+                                    min="0"
+
+                                    step="1"
+
+                                    placeholder="e.g. 1500">
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-row">
+
+                            <!-- Quantity -->
+
+                            <div class="form-group">
+
+                                <label for="stock">
+
+                                    Stock Quantity
+
+                                </label>
+
+                                <input
+
+                                    type="number"
+
+                                    id="stock"
+
+                                    name="stock"
+
+                                    min="0"
+
+                                    value="0"
+
+                                    required>
+
+                            </div>
+
+                            <!-- SKU -->
+
+                            <div class="form-group">
+
+                                <label for="sku">
+
+                                    Product SKU
+
+                                </label>
+
+                                <input
+
+                                    type="text"
+
+                                    id="sku"
+
+                                    name="sku"
+
+                                    placeholder="Optional">
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>
+
+                                Stock Status
+
+                            </label>
+
+                            <label class="checkbox-label">
+
+                                <input
+
+                                    type="checkbox"
+
+                                    id="inStock"
+
+                                    checked>
+
+                                Product is currently available
+
+                            </label>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- ======================================
+                     Product Images
+                ======================================= -->
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <h2>
+
+                            Product Images
+
+                        </h2>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="form-group">
+
+                            <label for="productImages">
+
+                                Upload Images
+
+                            </label>
+
+                            <input
+
+                                type="file"
+
+                                id="productImages"
+
+                                name="productImages"
+
+                                accept="image/*"
+
+                                multiple>
+
+                            <small>
+
+                                JPG, PNG or WEBP.
+                                Maximum 5 images.
+
+                            </small>
+
+                        </div>
+
+                        <div id="imagePreview"
+
+                             class="image-preview-grid">
+
+                            <!-- supplier-product-form.js -->
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                              <!-- ======================================
+                     Product Description
+                ======================================= -->
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <h2>
+
+                            Product Details
+
+                        </h2>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="form-group">
+
+                            <label for="description">
+
+                                Product Description
+
+                            </label>
+
+                            <textarea
+
+                                id="description"
+
+                                name="description"
+
+                                rows="6"
+
+                                placeholder="Describe the LPG product, cylinder condition, refill information and any additional details."
+
+                                required>
+
+                            </textarea>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label for="safetyInformation">
+
+                                Safety Information
+
+                            </label>
+
+                            <textarea
+
+                                id="safetyInformation"
+
+                                name="safetyInformation"
+
+                                rows="4"
+
+                                placeholder="Provide LPG safety instructions for customers.">
+
+                            </textarea>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- ======================================
+                     Delivery & Availability
+                ======================================= -->
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <h2>
+
+                            Delivery & Availability
+
+                        </h2>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="form-group">
+
+                            <label class="checkbox-label">
+
+                                <input
+
+                                    type="checkbox"
+
+                                    id="deliveryAvailable"
+
+                                    checked>
+
+                                Delivery Available
+
+                            </label>
+
+                        </div>
+
+                        <div class="form-row">
+
+                            <div class="form-group">
+
+                                <label for="deliveryFee">
+
+                                    Delivery Fee (KES)
+
+                                </label>
+
+                                <input
+
+                                    type="number"
+
+                                    id="deliveryFee"
+
+                                    min="0"
+
+                                    value="0">
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <label for="deliveryTime">
+
+                                    Estimated Delivery
+
+                                </label>
+
+                                <input
+
+                                    type="text"
+
+                                    id="deliveryTime"
+
+                                    placeholder="e.g. 30 Minutes">
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- ======================================
+                     Product Location
+                ======================================= -->
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <h2>
+
+                            Product Location
+
+                        </h2>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="form-row">
+
+                            <div class="form-group">
+
+                                <label for="county">
+
+                                    County
+
+                                </label>
+
+                                <select
+
+                                    id="county"
+
+                                    required>
+
+                                    <option value="">
+
+                                        Select County
+
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <label for="town">
+
+                                    Town
+
+                                </label>
+
+                                <select
+
+                                    id="town"
+
+                                    required>
+
+                                    <option value="">
+
+                                        Select Town
+
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label for="location">
+
+                                Physical Address
+
+                            </label>
+
+                            <input
+
+                                type="text"
+
+                                id="location"
+
+                                placeholder="Business location or pickup point"
+
+                                required>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                              <!-- ======================================
+                     Product Visibility
+                ======================================= -->
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <h2>
+
+                            Marketplace Settings
+
+                        </h2>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="form-group">
+
+                            <label class="checkbox-label">
+
+                                <input
+
+                                    type="checkbox"
+
+                                    id="featuredProduct">
+
+                                Request Featured Listing
+
+                            </label>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label class="checkbox-label">
+
+                                <input
+
+                                    type="checkbox"
+
+                                    id="published"
+
+                                    checked>
+
+                                Publish product immediately after approval
+
+                            </label>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label class="checkbox-label">
+
+                                <input
+
+                                    type="checkbox"
+
+                                    id="acceptReturns">
+
+                                Accept cylinder returns/exchanges
+
+                            </label>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- ======================================
+                     Product Tags
+                ======================================= -->
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <h2>
+
+                            Product Tags
+
+                        </h2>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="form-group">
+
+                            <label for="productTags">
+
+                                Search Tags
+
+                            </label>
+
+                            <input
+
+                                type="text"
+
+                                id="productTags"
+
+                                placeholder="Example: LPG, Cooking Gas, Rubis, 13Kg">
+
+                            <small>
+
+                                Separate multiple tags with commas.
+
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- ======================================
+                     Submit Actions
+                ======================================= -->
+
+                <div class="card">
+
+                    <div class="card-body">
+
+                        <div id="formMessage"
+                             class="alert d-none">
+
+                        </div>
+
+                        <div class="form-actions">
+
+                            <a href="/supplier/products/"
+                               class="btn btn-outline">
+
+                                <i class="fas fa-arrow-left"></i>
+
+                                Back to Products
+
+                            </a>
+
+                            <button
+
+                                type="reset"
+
+                                class="btn btn-outline">
+
+                                <i class="fas fa-rotate-left"></i>
+
+                                Reset Form
+
+                            </button>
+
+                            <button
+
+                                type="submit"
+
+                                id="saveProductButton"
+
+                                class="btn btn-primary">
+
+                                <span id="saveProductSpinner"
+                                      class="d-none">
+
+                                    <i class="fas fa-spinner fa-spin"></i>
+
+                                </span>
+
+                                <i class="fas fa-plus-circle"></i>
+
+                                Add Product
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </section>
+
+    </div>
+
+</main>
+
+  <!-- ======================================================
+Back To Top
+====================================================== -->
+
+<button
+
+    id="backToTop"
+
+    class="back-to-top"
+
+    aria-label="Back to Top">
+
+    <i class="fas fa-chevron-up"></i>
+
+</button>
+
+<!-- ======================================================
+Footer
+====================================================== -->
+
+<footer class="site-footer">
+
+    <div class="container">
+
+        <div class="footer-grid">
+
+            <div class="footer-column">
+
+                <img
+
+                    src="/assets/images/logo-light.png"
+
+                    alt="Kenya Gas Marketplace"
+
+                    class="footer-logo">
+
+                <p>
+
+                    Kenya's trusted LPG marketplace connecting
+                    customers with verified suppliers across all
+                    47 counties.
+
+                </p>
+
+            </div>
+
+            <div class="footer-column">
+
+                <h3>
+
+                    Supplier Portal
+
+                </h3>
+
+                <ul>
+
+                    <li>
+
+                        <a href="/supplier/dashboard/">
+
+                            Dashboard
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="/supplier/orders/">
+
+                            Orders
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="/supplier/products/">
+
+                            Products
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="/supplier/profile/">
+
+                            Profile
+
+                        </a>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <div class="footer-column">
+
+                <h3>
+
+                    Support
+
+                </h3>
+
+                <ul>
+
+                    <li>
+
+                        <a href="/help/">
+
+                            Help Centre
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="/contact/">
+
+                            Contact Us
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="/privacy/">
+
+                            Privacy Policy
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="/terms/">
+
+                            Terms & Conditions
+
+                        </a>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <div class="footer-column">
+
+                <h3>
+
+                    Follow Us
+
+                </h3>
+
+                <div class="footer-social">
+
+                    <a href="#">
+
+                        <i class="fab fa-facebook-f"></i>
+
+                    </a>
+
+                    <a href="#">
+
+                        <i class="fab fa-instagram"></i>
+
+                    </a>
+
+                    <a href="#">
+
+                        <i class="fab fa-x-twitter"></i>
+
+                    </a>
+
+                    <a href="#">
+
+                        <i class="fab fa-youtube"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+
+            <p>
+
+                &copy;
+
+                <span id="currentYear">
+
+                </span>
+
+                Kenya Gas Marketplace.
+
+                All Rights Reserved.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</footer>
+
+<!-- ======================================================
+Accessible Live Region
+====================================================== -->
+
+<div
+
+    id="announcement"
+
+    class="visually-hidden"
+
+    aria-live="polite"
+
+    aria-atomic="true">
+
+</div>
+
+<!-- ======================================================
+JavaScript
+====================================================== -->
+
+<script type="module"
+        src="/assets/js/firebase.js"></script>
+
+<script type="module"
+        src="/assets/js/auth.js"></script>
+
+<script type="module"
+        src="/assets/js/counties.js"></script>
+
+<script type="module"
+        src="/assets/js/supplier-product-form.js"></script>
+
+<!-- ======================================================
+Page Initialization
+====================================================== -->
+
+<script>
+
+document.addEventListener(
+
+    "DOMContentLoaded",
+
+    () => {
+
+        const year =
+
+            document.getElementById(
+
+                "currentYear"
+
+            );
+
+        if (year) {
+
+            year.textContent =
+
+                new Date().getFullYear();
+
+        }
+
+        window.addEventListener(
+
+            "load",
+
+            () => {
+
+                document
+
+                    .getElementById(
+
+                        "pageLoader"
+
+                    )
+
+                    ?.classList.add(
+
+                        "hidden"
+
+                    );
+
+            }
+
+        );
+
+        const backToTop =
+
+            document.getElementById(
+
+                "backToTop"
+
+            );
+
+        window.addEventListener(
+
+            "scroll",
+
+            () => {
+
+                if (
+
+                    window.scrollY > 400
+
+                ) {
+
+                    backToTop?.classList.add(
+
+                        "show"
+
+                    );
+
+                }
+
+                else {
+
+                    backToTop?.classList.remove(
+
+                        "show"
+
+                    );
+
+                }
+
+            }
+
+        );
+
+        backToTop?.addEventListener(
+
+            "click",
+
+            () => {
+
+                window.scrollTo({
+
+                    top: 0,
+
+                    behavior: "smooth"
+
+                });
+
+            }
+
+        );
+
+    }
+
+);
+
+</script>
+
+</body>
+
+</html>
