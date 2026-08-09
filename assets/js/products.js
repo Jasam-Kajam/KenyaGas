@@ -1,1912 +1,517 @@
 // ==========================================================
 // Kenya Gas Marketplace
 // File: assets/js/products.js
-// Version: 1.0.0
-//
-// Public Products Controller
+// Version: 1.0.1
+// Public Products Controller & Rendering Engine
 // ==========================================================
 
+import { db } from "./firebase.js";
 import {
-
-    db
-
-} from "./firebase.js";
-
-import {
-
     collection,
-
     query,
-
     where,
-
     orderBy,
-
     limit,
-
     startAfter,
-
     onSnapshot
-
-}
-from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 // ==========================================================
-// Firestore Collection
+// Firestore Collection & Constants
 // ==========================================================
 
-const productsRef = collection(
+const productsRef = collection(db, "products");
+const PAGE_SIZE = 20;
+const SEARCH_DELAY = 300;
+const PRODUCTS_CACHE_KEY = "kenyaGasProductsCache";
 
-    db,
-
-    "products"
-
-);
+const PLACEHOLDER_IMAGE = "/assets/images/product-placeholder.webp";
+const PLACEHOLDER_LOGO = "/assets/images/supplier-placeholder.webp";
 
 // ==========================================================
 // DOM Elements
 // ==========================================================
 
-const productsGrid =
-
-    document.getElementById("productsGrid");
-
-const loadingContainer =
-
-    document.getElementById("productsLoading");
-
-const emptyState =
-
-    document.getElementById("emptyProducts");
-
-const loadMoreButton =
-
-    document.getElementById("loadMoreProducts");
-
-const totalProducts =
-
-    document.getElementById("totalProducts");
-
-const searchInput =
-
-    document.getElementById("productSearch");
-
-const countyFilter =
-
-    document.getElementById("countyFilter");
-
-const townFilter =
-
-    document.getElementById("townFilter");
-
-const brandFilter =
-
-    document.getElementById("brandFilter");
-
-const sizeFilter =
-
-    document.getElementById("sizeFilter");
-
-const sortFilter =
-
-    document.getElementById("sortFilter");
+const productsGrid = document.getElementById("productsGrid");
+const loadingContainer = document.getElementById("productsLoading");
+const emptyState = document.getElementById("emptyProducts");
+const loadMoreButton = document.getElementById("loadMoreProducts");
+const totalProducts = document.getElementById("totalProducts");
+const searchInput = document.getElementById("productSearch");
+const countyFilter = document.getElementById("countyFilter");
+const townFilter = document.getElementById("townFilter");
+const brandFilter = document.getElementById("brandFilter");
+const sizeFilter = document.getElementById("sizeFilter");
+const sortFilter = document.getElementById("sortFilter");
+const clearFiltersButton = document.getElementById("clearFiltersButton");
 
 // ==========================================================
 // State
 // ==========================================================
 
-const PAGE_SIZE = 20;
-
 let lastVisible = null;
-
 let allProducts = [];
-
 let filteredProducts = [];
-
 let unsubscribe = null;
+let searchTimeout = null;
 
 // ==========================================================
 // UI Helpers
 // ==========================================================
 
 function showLoading() {
-
-    if (loadingContainer) {
-
-        loadingContainer.classList.remove(
-
-            "d-none"
-
-        );
-
-    }
-
+    if (loadingContainer) loadingContainer.classList.remove("d-none");
 }
 
 function hideLoading() {
-
-    if (loadingContainer) {
-
-        loadingContainer.classList.add(
-
-            "d-none"
-
-        );
-
-    }
-
+    if (loadingContainer) loadingContainer.classList.add("d-none");
 }
 
 function showEmptyState() {
-
-    if (emptyState) {
-
-        emptyState.classList.remove(
-
-            "d-none"
-
-        );
-
-    }
-
+    if (emptyState) emptyState.classList.remove("d-none");
 }
 
 function hideEmptyState() {
-
-    if (emptyState) {
-
-        emptyState.classList.add(
-
-            "d-none"
-
-        );
-
-    }
-
+    if (emptyState) emptyState.classList.add("d-none");
 }
 
 function clearProducts() {
-
-    if (productsGrid) {
-
-        productsGrid.innerHTML = "";
-
-    }
-
+    if (productsGrid) productsGrid.innerHTML = "";
 }
-
-// ==========================================================
-// Product Counter
-// ==========================================================
 
 function updateProductCounter() {
-
-    if (!totalProducts) return;
-
-    totalProducts.textContent =
-
-        filteredProducts.length;
-
+    if (totalProducts) {
+        totalProducts.textContent = filteredProducts.length;
+    }
 }
-
-// ==========================================================
-// Cleanup Listener
-// ==========================================================
 
 function stopRealtimeUpdates() {
-
-    if (
-
-        typeof unsubscribe ===
-
-        "function"
-
-    ) {
-
+    if (typeof unsubscribe === "function") {
         unsubscribe();
-
         unsubscribe = null;
-
     }
-
 }
 
 // ==========================================================
-// Load Products
+// Formatting & Badge Helpers
 // ==========================================================
-
-function loadProducts() {
-
-    showLoading();
-
-    hideEmptyState();
-
-    stopRealtimeUpdates();
-
-    const productsQuery = query(
-
-        productsRef,
-
-        where("status", "==", "active"),
-
-        where("supplierVerified", "==", true),
-
-        orderBy("createdAt", "desc"),
-
-        limit(PAGE_SIZE)
-
-    );
-
-    unsubscribe = onSnapshot(
-
-        productsQuery,
-
-        (snapshot) => {
-
-            hideLoading();
-
-            allProducts = [];
-
-            filteredProducts = [];
-
-            clearProducts();
-
-            if (snapshot.empty) {
-
-                showEmptyState();
-
-                updateProductCounter();
-
-                return;
-
-            }
-
-            snapshot.forEach((document) => {
-
-                const product = {
-
-                    id: document.id,
-
-                    ...document.data()
-
-                };
-
-                allProducts.push(product);
-
-            });
-
-            filteredProducts = [...allProducts];
-
-            lastVisible =
-
-                snapshot.docs[
-
-                    snapshot.docs.length - 1
-
-                ];
-
-            updateProductCounter();
-
-            renderProducts(filteredProducts);
-
-            if (loadMoreButton) {
-
-                loadMoreButton.disabled =
-
-                    snapshot.size < PAGE_SIZE;
-
-            }
-
-        },
-
-        (error) => {
-
-            console.error(
-
-                "Unable to load products:",
-
-                error
-
-            );
-
-            hideLoading();
-
-            showEmptyState();
-
-        }
-
-    );
-
-}
-
-// ==========================================================
-// Load More Products
-// ==========================================================
-
-async function loadMoreProducts() {
-
-    if (!lastVisible) {
-
-        return;
-
-    }
-
-    showLoading();
-
-    try {
-
-        const nextQuery = query(
-
-            productsRef,
-
-            where("status", "==", "active"),
-
-            where("supplierVerified", "==", true),
-
-            orderBy("createdAt", "desc"),
-
-            startAfter(lastVisible),
-
-            limit(PAGE_SIZE)
-
-        );
-
-        const {
-
-            getDocs
-
-        } = await import(
-
-            "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js"
-
-        );
-
-        const snapshot =
-
-            await getDocs(nextQuery);
-
-        hideLoading();
-
-        if (snapshot.empty) {
-
-            if (loadMoreButton) {
-
-                loadMoreButton.disabled = true;
-
-            }
-
-            return;
-
-        }
-
-        snapshot.forEach((document) => {
-
-            const product = {
-
-                id: document.id,
-
-                ...document.data()
-
-            };
-
-            allProducts.push(product);
-
-            filteredProducts.push(product);
-
-        });
-
-        lastVisible =
-
-            snapshot.docs[
-
-                snapshot.docs.length - 1
-
-            ];
-
-        updateProductCounter();
-
-        renderProducts(filteredProducts);
-
-    }
-
-    catch (error) {
-
-        hideLoading();
-
-        console.error(
-
-            "Unable to load more products:",
-
-            error
-
-        );
-
-    }
-
-}
-
-// ==========================================================
-// Load More Button
-// ==========================================================
-
-if (loadMoreButton) {
-
-    loadMoreButton.addEventListener(
-
-        "click",
-
-        loadMoreProducts
-
-    );
-
-}
-
-// ==========================================================
-// Product Helpers
-// ==========================================================
-
-const PLACEHOLDER_IMAGE =
-"/assets/images/product-placeholder.webp";
-
-const PLACEHOLDER_LOGO =
-"/assets/images/supplier-placeholder.webp";
 
 function escapeHTML(text = "") {
-
     const div = document.createElement("div");
-
     div.textContent = text;
-
     return div.innerHTML;
-
 }
-
-// ==========================================================
-// Currency Formatter
-// ==========================================================
 
 function formatPrice(price) {
-
-    return new Intl.NumberFormat(
-
-        "en-KE",
-
-        {
-
-            style: "currency",
-
-            currency: "KES",
-
-            maximumFractionDigits: 0
-
-        }
-
-    ).format(Number(price || 0));
-
+    return new Intl.NumberFormat("en-KE", {
+        style: "currency",
+        currency: "KES",
+        maximumFractionDigits: 0
+    }).format(Number(price || 0));
 }
-
-// ==========================================================
-// Product Image
-// ==========================================================
 
 function productImage(product) {
-
-    if (
-
-        Array.isArray(product.images) &&
-
-        product.images.length
-
-    ) {
-
-        return product.images[0];
-
-    }
-
-    return PLACEHOLDER_IMAGE;
-
+    return (Array.isArray(product.images) && product.images.length) ? product.images[0] : PLACEHOLDER_IMAGE;
 }
-
-// ==========================================================
-// Supplier Logo
-// ==========================================================
 
 function supplierLogo(product) {
-
-    return product.supplierLogo ||
-
-        PLACEHOLDER_LOGO;
-
+    return product.supplierLogo || PLACEHOLDER_LOGO;
 }
-
-// ==========================================================
-// Discount
-// ==========================================================
 
 function discountBadge(product) {
-
-    if (
-
-        !product.discountPercentage ||
-
-        product.discountPercentage <= 0
-
-    ) {
-
-        return "";
-
-    }
-
-    return `
-
-        <span class="badge-discount">
-
-            -${product.discountPercentage}%
-
-        </span>
-
-    `;
-
+    if (!product.discountPercentage || product.discountPercentage <= 0) return "";
+    return `<span class="badge-discount">-${product.discountPercentage}%</span>`;
 }
-
-// ==========================================================
-// Featured Badge
-// ==========================================================
 
 function featuredBadge(product) {
-
-    if (!product.featured) {
-
-        return "";
-
-    }
-
-    return `
-
-        <span class="badge-featured">
-
-            Featured
-
-        </span>
-
-    `;
-
+    if (!product.featured) return "";
+    return `<span class="badge-featured">Featured</span>`;
 }
-
-// ==========================================================
-// Verification Badge
-// ==========================================================
 
 function verifiedBadge(product) {
-
-    if (!product.supplierVerified) {
-
-        return "";
-
-    }
-
-    return `
-
-        <span class="supplier-verified">
-
-            <i class="fas fa-check-circle"></i>
-
-            Verified
-
-        </span>
-
-    `;
-
+    if (!product.supplierVerified) return "";
+    return `<span class="supplier-verified"><i class="fas fa-check-circle"></i> Verified</span>`;
 }
-
-// ==========================================================
-// Delivery Badge
-// ==========================================================
 
 function deliveryBadge(product) {
-
-    if (!product.deliveryAvailable) {
-
-        return "";
-
-    }
-
-    return `
-
-        <span class="delivery-badge">
-
-            Delivery Available
-
-        </span>
-
-    `;
-
+    if (!product.deliveryAvailable) return "";
+    return `<span class="delivery-badge">Delivery Available</span>`;
 }
-
-// ==========================================================
-// Stock Indicator
-// ==========================================================
 
 function stockIndicator(product) {
-
-    const stock =
-
-        Number(product.stock || 0);
-
-    if (stock <= 0) {
-
-        return `
-
-            <span class="stock-out">
-
-                Out of Stock
-
-            </span>
-
-        `;
-
-    }
-
-    if (
-
-        stock <=
-
-        Number(
-
-            product.lowStockThreshold || 5
-
-        )
-
-    ) {
-
-        return `
-
-            <span class="stock-low">
-
-                Low Stock
-
-            </span>
-
-        `;
-
-    }
-
-    return `
-
-        <span class="stock-ok">
-
-            In Stock
-
-        </span>
-
-    `;
-
+    const stock = Number(product.stock || 0);
+    if (stock <= 0) return `<span class="stock-out">Out of Stock</span>`;
+    if (stock <= Number(product.lowStockThreshold || 5)) return `<span class="stock-low">Low Stock</span>`;
+    return `<span class="stock-ok">In Stock</span>`;
 }
-
-// ==========================================================
-// Rating
-// ==========================================================
 
 function ratingHTML(product) {
-
-    const rating =
-
-        Number(product.rating || 0)
-
-        .toFixed(1);
-
-    const reviews =
-
-        Number(product.totalReviews || 0);
-
+    const rating = Number(product.rating || 0).toFixed(1);
+    const reviews = Number(product.totalReviews || 0);
     return `
-
         <div class="product-rating">
-
-            ★ ${rating}
-
-            <span>
-
-                (${reviews})
-
-            </span>
-
+            ★ ${rating} <span>(${reviews})</span>
         </div>
-
     `;
-
 }
 
 // ==========================================================
-// Product Card
+// Product Card Template
 // ==========================================================
 
 function createProductCard(product) {
-
     return `
-
-<article class="product-card">
-
-<div class="product-image">
-
-<a href="/product/?id=${product.id}">
-
-<img
-
-src="${productImage(product)}"
-
-alt="${escapeHTML(product.productName)}"
-
-loading="lazy"
-
-onerror="this.src='${PLACEHOLDER_IMAGE}'">
-
-</a>
-
-${featuredBadge(product)}
-
-${discountBadge(product)}
-
-</div>
-
-<div class="product-body">
-
-<div class="supplier-row">
-
-<img
-
-src="${supplierLogo(product)}"
-
-class="supplier-logo"
-
-loading="lazy"
-
-onerror="this.src='${PLACEHOLDER_LOGO}'">
-
-<div>
-
-<div class="supplier-name">
-
-${escapeHTML(product.supplierName)}
-
-</div>
-
-${verifiedBadge(product)}
-
-</div>
-
-</div>
-
-<h3>
-
-<a href="/product/?id=${product.id}">
-
-${escapeHTML(product.productName)}
-
-</a>
-
-</h3>
-
-<div class="product-brand">
-
-${escapeHTML(product.brand)}
-
-</div>
-
-<div class="product-size">
-
-${escapeHTML(product.cylinderSize)}
-
-•
-
-${escapeHTML(product.gasType)}
-
-</div>
-
-${ratingHTML(product)}
-
-<div class="price-section">
-
-<span class="current-price">
-
-${formatPrice(product.price)}
-
-</span>
-
-${
-product.originalPrice >
-
-product.price ?
-
-`<span class="old-price">
-
-${formatPrice(product.originalPrice)}
-
-</span>`
-
-:
-
-""
-
-}
-
-</div>
-
-<div class="product-location">
-
-${escapeHTML(product.town)},
-
-${escapeHTML(product.county)}
-
-</div>
-
-<div class="product-badges">
-
-${deliveryBadge(product)}
-
-${stockIndicator(product)}
-
-</div>
-
-<div class="product-actions">
-
-<a
-
-href="/product/?id=${product.id}"
-
-class="btn btn-primary">
-
-View Details
-
-</a>
-
-</div>
-
-</div>
-
-</article>
-
-`;
-
+        <article class="product-card">
+            <div class="product-image">
+                <a href="/product/?id=${product.id}">
+                    <img src="${productImage(product)}" alt="${escapeHTML(product.productName)}" loading="lazy" onerror="this.src='${PLACEHOLDER_IMAGE}'">
+                </a>
+                ${featuredBadge(product)}
+                ${discountBadge(product)}
+            </div>
+            <div class="product-body">
+                <div class="supplier-row">
+                    <img src="${supplierLogo(product)}" class="supplier-logo" loading="lazy" onerror="this.src='${PLACEHOLDER_LOGO}'">
+                    <div>
+                        <div class="supplier-name">${escapeHTML(product.supplierName)}</div>
+                        ${verifiedBadge(product)}
+                    </div>
+                </div>
+                <h3><a href="/product/?id=${product.id}">${escapeHTML(product.productName)}</a></h3>
+                <div class="product-brand">${escapeHTML(product.brand)}</div>
+                <div class="product-size">${escapeHTML(product.cylinderSize)} • ${escapeHTML(product.gasType)}</div>
+                ${ratingHTML(product)}
+                <div class="price-section">
+                    <span class="current-price">${formatPrice(product.price)}</span>
+                    ${product.originalPrice > product.price ? `<span class="old-price">${formatPrice(product.originalPrice)}</span>` : ""}
+                </div>
+                <div class="product-location">${escapeHTML(product.town)}, ${escapeHTML(product.county)}</div>
+                <div class="product-badges">${deliveryBadge(product)} ${stockIndicator(product)}</div>
+                <div class="product-actions">
+                    <a href="/product/?id=${product.id}" class="btn btn-primary">View Details</a>
+                </div>
+            </div>
+        </article>
+    `;
 }
 
 // ==========================================================
-// Kenya Gas Marketplace
-// Products Rendering Engine
-// Version 2.0.0
-// ==========================================================
-
-// ==========================================================
-// Render Products
+// Rendering Engine
 // ==========================================================
 
 function renderProducts(products = []) {
-
     if (!productsGrid) return;
-
     productsGrid.replaceChildren();
-
     hideLoading();
-
     hideEmptyState();
-
     updateProductCounter();
 
     if (!products.length) {
-
         showEmptyState();
-
         return;
-
     }
 
-    const fragment =
-
-        document.createDocumentFragment();
-
+    const fragment = document.createDocumentFragment();
     for (const product of products) {
-
-        const wrapper =
-
-            document.createElement("div");
-
-        wrapper.className =
-
-            "product-grid-item";
-
-        wrapper.dataset.productId =
-
-            product.id;
-
-        wrapper.innerHTML =
-
-            createProductCard(product);
-
+        const wrapper = document.createElement("div");
+        wrapper.className = "product-grid-item";
+        wrapper.dataset.productId = product.id;
+        wrapper.innerHTML = createProductCard(product);
         fragment.appendChild(wrapper);
-
     }
-
     productsGrid.appendChild(fragment);
-
     initializeProductImages();
-
-    initializeProductButtons();
-
 }
-
-// ==========================================================
-// Image Initializer
-// ==========================================================
 
 function initializeProductImages() {
-
-    const images =
-
-        productsGrid.querySelectorAll("img");
-
-    images.forEach((image) => {
-
+    if (!productsGrid) return;
+    productsGrid.querySelectorAll("img").forEach((image) => {
         image.loading = "lazy";
-
         image.decoding = "async";
-
-        image.referrerPolicy =
-
-            "no-referrer";
-
-        image.onerror = () => {
-
-            image.src =
-
-                PLACEHOLDER_IMAGE;
-
-        };
-
+        image.referrerPolicy = "no-referrer";
+        image.onerror = () => { image.src = PLACEHOLDER_IMAGE; };
     });
-
 }
 
 // ==========================================================
-// Product Buttons
-// ==========================================================
-
-function initializeProductButtons() {
-
-    document
-
-        .querySelectorAll(
-
-            ".btn-view-product"
-
-        )
-
-        .forEach((button) => {
-
-            button.addEventListener(
-
-                "click",
-
-                () => {
-
-                    const id =
-
-                        button.dataset.product;
-
-                    if (!id) return;
-
-                    window.location.assign(
-
-                        `/product/${id}`
-
-                    );
-
-                }
-
-            );
-
-        });
-
-}
-
-// ==========================================================
-// Product Statistics
+// Statistics & Refresh Pipeline
 // ==========================================================
 
 function updateMarketplaceStatistics() {
+    const available = filteredProducts.filter(p => Number(p.stock) > 0).length;
+    const featured = filteredProducts.filter(p => p.featured).length;
+    const verified = filteredProducts.filter(p => p.supplierVerified).length;
 
-    const available =
+    const availableElement = document.getElementById("availableProducts");
+    const featuredElement = document.getElementById("featuredProducts");
+    const verifiedElement = document.getElementById("verifiedSuppliers");
 
-        filteredProducts.filter(
-
-            product =>
-
-                Number(product.stock) > 0
-
-        ).length;
-
-    const featured =
-
-        filteredProducts.filter(
-
-            product =>
-
-                product.featured
-
-        ).length;
-
-    const verified =
-
-        filteredProducts.filter(
-
-            product =>
-
-                product.supplierVerified
-
-        ).length;
-
-    const availableElement =
-
-        document.getElementById(
-
-            "availableProducts"
-
-        );
-
-    const featuredElement =
-
-        document.getElementById(
-
-            "featuredProducts"
-
-        );
-
-    const verifiedElement =
-
-        document.getElementById(
-
-            "verifiedSuppliers"
-
-        );
-
-    if (availableElement) {
-
-        availableElement.textContent =
-
-            available.toLocaleString();
-
-    }
-
-    if (featuredElement) {
-
-        featuredElement.textContent =
-
-            featured.toLocaleString();
-
-    }
-
-    if (verifiedElement) {
-
-        verifiedElement.textContent =
-
-            verified.toLocaleString();
-
-    }
-
+    if (availableElement) availableElement.textContent = available.toLocaleString();
+    if (featuredElement) featuredElement.textContent = featured.toLocaleString();
+    if (verifiedElement) verifiedElement.textContent = verified.toLocaleString();
 }
-
-// ==========================================================
-// Refresh Marketplace
-// ==========================================================
 
 function refreshMarketplace() {
-
-    renderProducts(
-
-        filteredProducts
-
-    );
-
+    renderProducts(filteredProducts);
     updateMarketplaceStatistics();
-
+    updateProductCounter();
+    saveProductsCache();
+    updateURL();
 }
 
 // ==========================================================
-// Empty State CTA
-// ==========================================================
-
-function initializeEmptyState() {
-
-    const button =
-
-        document.getElementById(
-
-            "clearFiltersButton"
-
-        );
-
-    if (!button) return;
-
-    button.addEventListener(
-
-        "click",
-
-        () => {
-
-            if (searchInput)
-
-                searchInput.value = "";
-
-            if (countyFilter)
-
-                countyFilter.value = "";
-
-            if (townFilter)
-
-                townFilter.value = "";
-
-            if (brandFilter)
-
-                brandFilter.value = "";
-
-            if (sizeFilter)
-
-                sizeFilter.value = "";
-
-            if (sortFilter)
-
-                sortFilter.selectedIndex = 0;
-
-            filteredProducts =
-
-                [...allProducts];
-
-            refreshMarketplace();
-
-        }
-
-    );
-
-}
-
-// ==========================================================
-// Startup
-// ==========================================================
-
-document.addEventListener(
-
-    "DOMContentLoaded",
-
-    () => {
-
-        initializeEmptyState();
-
-        loadProducts();
-
-    }
-
-);
-
-// ==========================================================
-// Cleanup
-// ==========================================================
-
-window.addEventListener(
-
-    "beforeunload",
-
-    stopRealtimeUpdates
-
-);
-
-// ==========================================================
-// Kenya Gas Marketplace
-// Products Search & Filters
-// ==========================================================
-
-// ==========================================================
-// Search Delay
-// ==========================================================
-
-const SEARCH_DELAY = 300;
-
-let searchTimeout = null;
-
-// ==========================================================
-// Normalize Text
+// Filtering & Sorting Logic
 // ==========================================================
 
 function normalize(value) {
-
-    return String(value || "")
-
-        .trim()
-
-        .toLowerCase();
-
+    return String(value || "").trim().toLowerCase();
 }
-
-// ==========================================================
-// Apply Filters
-// ==========================================================
 
 function applyFilters() {
+    const keyword = normalize(searchInput?.value);
+    const county = normalize(countyFilter?.value);
+    const town = normalize(townFilter?.value);
+    const brand = normalize(brandFilter?.value);
+    const size = normalize(sizeFilter?.value);
 
-    const keyword =
+    filteredProducts = allProducts.filter((product) => {
+        if (keyword && ![
+            product.productName,
+            product.brand,
+            product.supplierName,
+            product.county,
+            product.town
+        ].join(" ").toLowerCase().includes(keyword)) {
+            return false;
+        }
+        if (county && normalize(product.county) !== county) return false;
+        if (town && normalize(product.town) !== town) return false;
+        if (brand && normalize(product.brand) !== brand) return false;
+        if (size && normalize(product.cylinderSize) !== size) return false;
+        return true;
+    });
 
-        normalize(searchInput?.value);
-
-    const county =
-
-        normalize(countyFilter?.value);
-
-    const town =
-
-        normalize(townFilter?.value);
-
-    const brand =
-
-        normalize(brandFilter?.value);
-
-    const size =
-
-        normalize(sizeFilter?.value);
-
-    filteredProducts =
-
-        allProducts.filter((product) => {
-
-            if (
-
-                keyword &&
-
-                ![
-                    product.productName,
-                    product.brand,
-                    product.supplierName,
-                    product.county,
-                    product.town
-                ]
-
-                .join(" ")
-
-                .toLowerCase()
-
-                .includes(keyword)
-
-            ) {
-
-                return false;
-
-            }
-
-            if (
-
-                county &&
-
-                normalize(product.county) !== county
-
-            ) {
-
-                return false;
-
-            }
-
-            if (
-
-                town &&
-
-                normalize(product.town) !== town
-
-            ) {
-
-                return false;
-
-            }
-
-            if (
-
-                brand &&
-
-                normalize(product.brand) !== brand
-
-            ) {
-
-                return false;
-
-            }
-
-            if (
-
-                size &&
-
-                normalize(product.cylinderSize) !== size
-
-            ) {
-
-                return false;
-
-            }
-
-            return true;
-
-        });
-
-    sortProducts();
-
+    sortProducts(false); // Sort without triggering extra refresh loops
 }
 
-// ==========================================================
-// Sorting
-// ==========================================================
-
-function sortProducts() {
-
-    const sort =
-
-        sortFilter?.value ||
-
-        "latest";
+function sortProducts(triggerRefresh = true) {
+    const sort = sortFilter?.value || "latest";
 
     switch (sort) {
-
         case "price-asc":
-
-            filteredProducts.sort(
-
-                (a, b) =>
-
-                    Number(a.price) -
-
-                    Number(b.price)
-
-            );
-
+            filteredProducts.sort((a, b) => Number(a.price) - Number(b.price));
             break;
-
         case "price-desc":
-
-            filteredProducts.sort(
-
-                (a, b) =>
-
-                    Number(b.price) -
-
-                    Number(a.price)
-
-            );
-
+            filteredProducts.sort((a, b) => Number(b.price) - Number(a.price));
             break;
-
         case "name":
-
-            filteredProducts.sort(
-
-                (a, b) =>
-
-                    a.productName.localeCompare(
-
-                        b.productName
-
-                    )
-
-            );
-
+            filteredProducts.sort((a, b) => a.productName.localeCompare(b.productName));
             break;
-
         case "rating":
-
-            filteredProducts.sort(
-
-                (a, b) =>
-
-                    Number(b.rating || 0) -
-
-                    Number(a.rating || 0)
-
-            );
-
+            filteredProducts.sort((a, b) => Number(b.rating || 0) - Number(a.rating || 0));
             break;
-
         case "latest":
-
         default:
-
-            filteredProducts.sort(
-
-                (a, b) =>
-
-                    b.createdAt.seconds -
-
-                    a.createdAt.seconds
-
-            );
-
+            filteredProducts.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
     }
 
-    refreshMarketplace();
-
+    if (triggerRefresh) {
+        refreshMarketplace();
+    }
 }
-
-// ==========================================================
-// Search
-// ==========================================================
 
 function handleSearch() {
-
-    clearTimeout(
-
-        searchTimeout
-
-    );
-
-    searchTimeout =
-
-        setTimeout(
-
-            applyFilters,
-
-            SEARCH_DELAY
-
-        );
-
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(applyFilters, SEARCH_DELAY);
 }
 
 // ==========================================================
-// Event Listeners
-// ==========================================================
-
-if (searchInput) {
-
-    searchInput.addEventListener(
-
-        "input",
-
-        handleSearch
-
-    );
-
-}
-
-if (countyFilter) {
-
-    countyFilter.addEventListener(
-
-        "change",
-
-        applyFilters
-
-    );
-
-}
-
-if (townFilter) {
-
-    townFilter.addEventListener(
-
-        "change",
-
-        applyFilters
-
-    );
-
-}
-
-if (brandFilter) {
-
-    brandFilter.addEventListener(
-
-        "change",
-
-        applyFilters
-
-    );
-
-}
-
-if (sizeFilter) {
-
-    sizeFilter.addEventListener(
-
-        "change",
-
-        applyFilters
-
-    );
-
-}
-
-if (sortFilter) {
-
-    sortFilter.addEventListener(
-
-        "change",
-
-        sortProducts
-
-    );
-
-}
-
-// ==========================================================
-// Kenya Gas Marketplace
-// Products Controller
-// Part 5 - Final
-// ==========================================================
-
-// ==========================================================
-// Local Cache
-// ==========================================================
-
-const PRODUCTS_CACHE_KEY =
-
-    "kenyaGasProductsCache";
-
-// ==========================================================
-// Save Cache
+// URL & Caching Management
 // ==========================================================
 
 function saveProductsCache() {
-
     try {
-
-        sessionStorage.setItem(
-
-            PRODUCTS_CACHE_KEY,
-
-            JSON.stringify(filteredProducts)
-
-        );
-
+        sessionStorage.setItem(PRODUCTS_CACHE_KEY, JSON.stringify(filteredProducts));
+    } catch (error) {
+        console.warn("Unable to cache products.", error);
     }
-
-    catch (error) {
-
-        console.warn(
-
-            "Unable to cache products.",
-
-            error
-
-        );
-
-    }
-
 }
-
-// ==========================================================
-// Restore Cache
-// ==========================================================
 
 function restoreProductsCache() {
-
     try {
-
-        const cache =
-
-            sessionStorage.getItem(
-
-                PRODUCTS_CACHE_KEY
-
-            );
-
+        const cache = sessionStorage.getItem(PRODUCTS_CACHE_KEY);
         if (!cache) return false;
-
-        const data =
-
-            JSON.parse(cache);
-
-        if (!Array.isArray(data)) {
-
-            return false;
-
-        }
-
+        const data = JSON.parse(cache);
+        if (!Array.isArray(data)) return false;
         filteredProducts = data;
-
         renderProducts(filteredProducts);
-
         updateMarketplaceStatistics();
-
         return true;
-
-    }
-
-    catch {
-
+    } catch {
         return false;
-
     }
-
 }
-
-// ==========================================================
-// URL Parameters
-// ==========================================================
 
 function loadFiltersFromURL() {
-
-    const params =
-
-        new URLSearchParams(
-
-            window.location.search
-
-        );
-
-    if (
-
-        searchInput &&
-
-        params.has("search")
-
-    ) {
-
-        searchInput.value =
-
-            params.get("search");
-
-    }
-
-    if (
-
-        countyFilter &&
-
-        params.has("county")
-
-    ) {
-
-        countyFilter.value =
-
-            params.get("county");
-
-    }
-
-    if (
-
-        townFilter &&
-
-        params.has("town")
-
-    ) {
-
-        townFilter.value =
-
-            params.get("town");
-
-    }
-
-    if (
-
-        brandFilter &&
-
-        params.has("brand")
-
-    ) {
-
-        brandFilter.value =
-
-            params.get("brand");
-
-    }
-
-    if (
-
-        sizeFilter &&
-
-        params.has("size")
-
-    ) {
-
-        sizeFilter.value =
-
-            params.get("size");
-
-    }
-
-    if (
-
-        sortFilter &&
-
-        params.has("sort")
-
-    ) {
-
-        sortFilter.value =
-
-            params.get("sort");
-
-    }
-
+    const params = new URLSearchParams(window.location.search);
+    if (searchInput && params.has("search")) searchInput.value = params.get("search");
+    if (countyFilter && params.has("county")) countyFilter.value = params.get("county");
+    if (townFilter && params.has("town")) townFilter.value = params.get("town");
+    if (brandFilter && params.has("brand")) brandFilter.value = params.get("brand");
+    if (sizeFilter && params.has("size")) sizeFilter.value = params.get("size");
+    if (sortFilter && params.has("sort")) sortFilter.value = params.get("sort");
 }
-
-// ==========================================================
-// Save URL State
-// ==========================================================
 
 function updateURL() {
+    const params = new URLSearchParams();
+    if (searchInput?.value) params.set("search", searchInput.value);
+    if (countyFilter?.value) params.set("county", countyFilter.value);
+    if (townFilter?.value) params.set("town", townFilter.value);
+    if (brandFilter?.value) params.set("brand", brandFilter.value);
+    if (sizeFilter?.value) params.set("size", sizeFilter.value);
+    if (sortFilter?.value) params.set("sort", sortFilter.value);
+    
+    history.replaceState({}, "", `${location.pathname}${params.toString() ? '?' + params.toString() : ''}`);
+}
 
-    const params =
+// ==========================================================
+// Firestore Data Fetching
+// ==========================================================
 
-        new URLSearchParams();
+function loadProducts() {
+    showLoading();
+    hideEmptyState();
+    stopRealtimeUpdates();
 
-    if (searchInput?.value)
-
-        params.set(
-
-            "search",
-
-            searchInput.value
-
-        );
-
-    if (countyFilter?.value)
-
-        params.set(
-
-            "county",
-
-            countyFilter.value
-
-        );
-
-    if (townFilter?.value)
-
-        params.set(
-
-            "town",
-
-            townFilter.value
-
-        );
-
-    if (brandFilter?.value)
-
-        params.set(
-
-            "brand",
-
-            brandFilter.value
-
-        );
-
-    if (sizeFilter?.value)
-
-        params.set(
-
-            "size",
-
-            sizeFilter.value
-
-        );
-
-    if (sortFilter?.value)
-
-        params.set(
-
-            "sort",
-
-            sortFilter.value
-
-        );
-
-    history.replaceState(
-
-        {},
-
-        "",
-
-        `${location.pathname}?${params}`
-
+    const productsQuery = query(
+        productsRef,
+        where("status", "==", "active"),
+        where("supplierVerified", "==", true),
+        orderBy("createdAt", "desc"),
+        limit(PAGE_SIZE)
     );
 
-}
+    unsubscribe = onSnapshot(
+        productsQuery,
+        (snapshot) => {
+            hideLoading();
+            allProducts = [];
 
-// ==========================================================
-// Marketplace Refresh
-// ==========================================================
+            if (snapshot.empty) {
+                filteredProducts = [];
+                showEmptyState();
+                updateProductCounter();
+                return;
+            }
 
-function refreshMarketplaceView() {
+            snapshot.forEach((document) => {
+                allProducts.push({
+                    id: document.id,
+                    ...document.data()
+                });
+            });
 
-    renderProducts(
+            lastVisible = snapshot.docs[snapshot.docs.length - 1];
 
-        filteredProducts
+            // Re-apply filters against new live data so active searches aren't wiped out
+            applyFilters();
 
+            if (loadMoreButton) {
+                loadMoreButton.disabled = snapshot.size < PAGE_SIZE;
+            }
+        },
+        (error) => {
+            console.error("Unable to load products:", error);
+            hideLoading();
+            showEmptyState();
+        }
     );
+}
 
-    updateMarketplaceStatistics();
+async function loadMoreProducts() {
+    if (!lastVisible) return;
+    showLoading();
 
-    updateProductCounter();
+    try {
+        const nextQuery = query(
+            productsRef,
+            where("status", "==", "active"),
+            where("supplierVerified", "==", true),
+            orderBy("createdAt", "desc"),
+            startAfter(lastVisible),
+            limit(PAGE_SIZE)
+        );
 
-    saveProductsCache();
+        const { getDocs } = await import("https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js");
+        const snapshot = await getDocs(nextQuery);
+        hideLoading();
 
-    updateURL();
+        if (snapshot.empty) {
+            if (loadMoreButton) loadMoreButton.disabled = true;
+            return;
+        }
 
+        snapshot.forEach((document) => {
+            const product = { id: document.id, ...document.data() };
+            allProducts.push(product);
+        });
+
+        lastVisible = snapshot.docs[snapshot.docs.length - 1];
+        applyFilters();
+    } catch (error) {
+        hideLoading();
+        console.error("Unable to load more products:", error);
+    }
 }
 
 // ==========================================================
-// Override Refresh
+// Event Listeners Binding
 // ==========================================================
 
-function refreshMarketplace() {
+function bindEvents() {
+    if (loadMoreButton) loadMoreButton.addEventListener("click", loadMoreProducts);
+    if (searchInput) searchInput.addEventListener("input", handleSearch);
+    if (countyFilter) countyFilter.addEventListener("change", applyFilters);
+    if (townFilter) townFilter.addEventListener("change", applyFilters);
+    if (brandFilter) brandFilter.addEventListener("change", applyFilters);
+    if (sizeFilter) sizeFilter.addEventListener("change", applyFilters);
+    if (sortFilter) sortFilter.addEventListener("change", () => sortProducts(true));
 
-    refreshMarketplaceView();
+    if (clearFiltersButton) {
+        clearFiltersButton.addEventListener("click", () => {
+            if (searchInput) searchInput.value = "";
+            if (countyFilter) countyFilter.value = "";
+            if (townFilter) townFilter.value = "";
+            if (brandFilter) brandFilter.value = "";
+            if (sizeFilter) sizeFilter.value = "";
+            if (sortFilter) sortFilter.selectedIndex = 0;
+            filteredProducts = [...allProducts];
+            refreshMarketplace();
+        });
+    }
 
+    window.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "visible") saveProductsCache();
+    });
+
+    window.addEventListener("beforeunload", () => {
+        stopRealtimeUpdates();
+        saveProductsCache();
+    });
 }
 
 // ==========================================================
-// Initialize
+// Initialization Startup
 // ==========================================================
 
 async function initializeMarketplace() {
-
+    bindEvents();
     loadFiltersFromURL();
-
-    const restored =
-
-        restoreProductsCache();
-
+    const restored = restoreProductsCache();
     if (!restored) {
-
         showLoading();
-
     }
-
     loadProducts();
-
 }
 
-// ==========================================================
-// Startup
-// ==========================================================
-
-document.addEventListener(
-
-    "DOMContentLoaded",
-
-    initializeMarketplace
-
-);
-
-// ==========================================================
-// Visibility
-// ==========================================================
-
-document.addEventListener(
-
-    "visibilitychange",
-
-    () => {
-
-        if (
-
-            document.visibilityState ===
-
-            "visible"
-
-        ) {
-
-            saveProductsCache();
-
-        }
-
-    }
-
-);
-
-// ==========================================================
-// Cleanup
-// ==========================================================
-
-window.addEventListener(
-
-    "beforeunload",
-
-    () => {
-
-        stopRealtimeUpdates();
-
-        saveProductsCache();
-
-    }
-
-);
+document.addEventListener("DOMContentLoaded", initializeMarketplace);
