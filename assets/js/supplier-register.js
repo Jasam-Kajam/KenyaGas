@@ -423,7 +423,7 @@ async function registerSupplier(e) {
 
         setTimeout(() => {
             window.location.href = "/supplier/login/";
-        }, 3000);
+        }, 10);
 
     } catch (error) {
         console.error("Registration Error:", error);
