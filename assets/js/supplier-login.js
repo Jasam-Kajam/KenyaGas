@@ -148,7 +148,7 @@ async function configurePersistence() {
 function getRedirectUrl() {
     return (
         sessionStorage.getItem("redirectAfterLogin") ||
-        "/supplier/dashboard/"
+        "/supplier/dashboard/index.html"
     );
 }
 
