@@ -148,7 +148,7 @@ async function configurePersistence() {
 function getRedirectUrl() {
     return (
         sessionStorage.getItem("redirectAfterLogin") ||
-        "/supplier/dashboard/index.html"
+        "/supplier/dashboard/"
     );
 }
 
@@ -247,7 +247,13 @@ async function loginSupplier() {
             const redirect = getRedirectUrl();
             clearRedirectUrl();
             console.log("Redirecting to:", redirect);
-            window.location.href = redirect;
+            // Ensure it points directly to index.html if using standard static hosting
+let targetUrl = redirect;
+if (targetUrl.endsWith('/')) {
+    targetUrl += 'index.html';
+}
+console.log("Forcing navigation to:", targetUrl);
+window.location.replace(targetUrl);
             return;
         } else if (status === "pending" || status === "pending review") {
             window.location.href = "/supplier/pending/";
